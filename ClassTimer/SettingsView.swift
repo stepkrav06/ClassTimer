@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var viewModel: AppViewModel
+    @State private var customColor =
+    Color(.sRGB, red: 0, green: 0, blue: 0.01)
     var body: some View {
         VStack{
 
@@ -34,6 +36,12 @@ struct SettingsView: View {
                             }
                         }
                     }
+                    ColorPicker("", selection: $viewModel.pickedColor)
+                        .frame(maxWidth:20)
+                        
+
+
+
                 }.frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             Spacer()

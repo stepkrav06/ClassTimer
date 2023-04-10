@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 let viewModel = AppViewModel()
 class AppViewModel: ObservableObject {
-    @Published var colors = [Color.c1, Color.c2, Color.c3, Color.c4, Color.c5]
+    @Published var colors = [Color.c1, Color.c2, Color.c5, Color.c3, Color.c4]
     @Published var pickedColor = Color.c1
 }
 
