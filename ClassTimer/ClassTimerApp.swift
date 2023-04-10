@@ -10,8 +10,12 @@ import SwiftUI
 @main
 struct ClassTimerApp: App {
     var body: some Scene {
+        let viewModel = AppViewModel()
         WindowGroup {
-            ContentView()
+
+                TabView()
+                .environmentObject(viewModel)
+            
         }
     }
 }

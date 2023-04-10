@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TimerView: View {
+    @EnvironmentObject var viewModel: AppViewModel
     @State var progress: Double = 0.15
     let dateNow = Date()
     let targetDate = Date(timeIntervalSinceNow: TimeInterval(120))
@@ -41,7 +42,7 @@ struct TimerView: View {
                 Circle()
                     .trim(from: 0.15, to: 0.85)
                     .stroke(
-                        Color.pink.opacity(0.5),
+                        viewModel.pickedColor.opacity(0.5),
                         style: StrokeStyle(
                             lineWidth: 30,
                             lineCap: .round
@@ -52,7 +53,7 @@ struct TimerView: View {
                 Circle()
                     .trim(from: 0.15, to: progress)
                     .stroke(
-                        Color.pink,
+                        viewModel.pickedColor,
                         // 1
                         style: StrokeStyle(
                             lineWidth: 30,
@@ -81,6 +82,7 @@ struct TimerView: View {
                 Text("go")
             }
         }
+        .navigationTitle("Timer")
 
         .onReceive(timer) { time in
             if progress < 0.85 {
