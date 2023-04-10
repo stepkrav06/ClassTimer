@@ -35,39 +35,7 @@ struct TimerView: View {
 
         return timeString
     }
-    func findDatesForClass(findClass: Class)->[Date]{
-        var dates: [Date] = []
-        var today = Date()
-        let formatter1 = DateFormatter()
-        formatter1.dateFormat = "E"
-        let todayWeekday = formatter1.string(from: today)
-        let formatter2 = DateFormatter()
-        formatter2.dateFormat = "dd/MM/yyyy"
-        let todayStr = formatter2.string(from: today)
-        today = formatter2.date(from: todayStr)!
-        for day in findClass.daysTimes.keys{
-
-            var dayDiff = dayToDayNumber[day]!-dayToDayNumber[todayWeekday]!
-            if dayDiff<0{
-                dayDiff = 7-dayDiff
-            }
-            for time in findClass.daysTimes[day]! {
-                let dateClass = today.addingTimeInterval(TimeInterval(86400*dayDiff))
-                var strDate = formatter2.string(from: dateClass)
-                strDate = strDate + " \(time)"
-                let formatter3 = DateFormatter()
-                formatter3.dateFormat = "dd/MM/yyyy HH:mm"
-                dates.append(formatter3.date(from: strDate)!)
-
-            }
-        }
-
-        for date in dates {
-            print(date)
-        }
-        return dates
-
-    }
+    
 
     var body: some View {
         VStack {
@@ -111,7 +79,23 @@ struct TimerView: View {
                 }
 
             }
-            Button(action: {findDatesForClass(findClass: class1)}){
+            Button(action: {
+                let class1 = Class(name: "Math", daysTimes: ["Wed":["10:30", "11:30"]], dates: [])
+                let classes = [class1]
+                do {
+                    // Create JSON Encoder
+                    let encoder = JSONEncoder()
+
+                    // Encode Note
+                    let data = try encoder.encode(classes)
+
+                    // Write/Set Data
+                    UserDefaults.standard.set(data, forKey: "Classes")
+
+                } catch {
+                    print("Unable to Encode Array of Classes (\(error))")
+                }
+            }){
                 Text("go")
             }
         }

@@ -18,9 +18,10 @@
 		2754938D29E3F8FB0052F42F /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754938C29E3F8FB0052F42F /* Tab.swift */; };
 		2754938F29E3F9E50052F42F /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754938E29E3F9E50052F42F /* TabView.swift */; };
 		2754939129E400360052F42F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939029E400360052F42F /* SettingsView.swift */; };
-		2754939329E41AD90052F42F /* ColorPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939229E41AD90052F42F /* ColorPickView.swift */; };
 		2754939529E42C9B0052F42F /* ClassListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939429E42C9B0052F42F /* ClassListView.swift */; };
 		2754939729E42CF00052F42F /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939629E42CF00052F42F /* Class.swift */; };
+		2783761229E492CA00973219 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761129E492CA00973219 /* DayView.swift */; };
+		2783761629E4AFDB00973219 /* ClassAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761529E4AFDB00973219 /* ClassAddView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,9 +56,10 @@
 		2754938C29E3F8FB0052F42F /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		2754938E29E3F9E50052F42F /* TabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		2754939029E400360052F42F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		2754939229E41AD90052F42F /* ColorPickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickView.swift; sourceTree = "<group>"; };
 		2754939429E42C9B0052F42F /* ClassListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassListView.swift; sourceTree = "<group>"; };
 		2754939629E42CF00052F42F /* Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
+		2783761129E492CA00973219 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
+		2783761529E4AFDB00973219 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,14 +111,15 @@
 			isa = PBXGroup;
 			children = (
 				2754936029E3E42F0052F42F /* ClassTimerApp.swift */,
+				2783761129E492CA00973219 /* DayView.swift */,
 				2754936229E3E42F0052F42F /* ContentView.swift */,
 				2754938E29E3F9E50052F42F /* TabView.swift */,
 				2754939029E400360052F42F /* SettingsView.swift */,
 				2754938A29E3E4460052F42F /* TimerView.swift */,
 				2754938C29E3F8FB0052F42F /* Tab.swift */,
 				2754939429E42C9B0052F42F /* ClassListView.swift */,
+				2783761529E4AFDB00973219 /* ClassAddView.swift */,
 				2754939629E42CF00052F42F /* Class.swift */,
-				2754939229E41AD90052F42F /* ColorPickView.swift */,
 				2754936429E3E4320052F42F /* Assets.xcassets */,
 				2754936629E3E4320052F42F /* Preview Content */,
 			);
@@ -279,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2754938B29E3E4460052F42F /* TimerView.swift in Sources */,
+				2783761229E492CA00973219 /* DayView.swift in Sources */,
 				2754938F29E3F9E50052F42F /* TabView.swift in Sources */,
 				2754936329E3E42F0052F42F /* ContentView.swift in Sources */,
 				2754939729E42CF00052F42F /* Class.swift in Sources */,
@@ -286,7 +290,7 @@
 				2754939129E400360052F42F /* SettingsView.swift in Sources */,
 				2754936129E3E42F0052F42F /* ClassTimerApp.swift in Sources */,
 				2754938D29E3F8FB0052F42F /* Tab.swift in Sources */,
-				2754939329E41AD90052F42F /* ColorPickView.swift in Sources */,
+				2783761629E4AFDB00973219 /* ClassAddView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

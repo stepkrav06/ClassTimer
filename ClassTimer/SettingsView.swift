@@ -28,11 +28,10 @@ struct SettingsView: View {
                             Circle().fill(color).frame(width: 22).padding(4)
                                 .onTapGesture {
                                     viewModel.pickedColor = color
+                                    viewModel.defaults.setColor(color: UIColor(color), forKey: "AccentColor")
                                 }
-                            if viewModel.pickedColor == color{
-                                Circle()
-                                    .stroke(Color.textC1, lineWidth: 2)
-                                    .frame(width: 22).padding(4)
+                            if UIColor(viewModel.pickedColor).cgColor.components == UIColor(color).cgColor.components{
+                                Circle().fill(color).frame(width: 28)
                             }
                         }
                     }

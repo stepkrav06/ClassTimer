@@ -20,7 +20,7 @@ struct TabView: View {
                         case .timer:
                             TimerView()
                         case .classes:
-                            EmptyView()
+                            ClassListView()
                         case .settings:
                             SettingsView()
                         }
