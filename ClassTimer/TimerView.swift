@@ -14,7 +14,7 @@ struct TimerView: View {
     let targetDate = Date(timeIntervalSinceNow: TimeInterval(120))
     @State var dateDiff = Date(timeIntervalSinceNow: TimeInterval(1000)) - Date()
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-
+    let class1: Class = Class(name: "Class", daysTimes: ["Wed":["10:30", "12:30"]], dates: [])
     func calculateTimeLeft(interval: TimeInterval) -> String {
         var roundedInterval = Int(round(interval))
         var timeString = ""
@@ -34,6 +34,39 @@ struct TimerView: View {
         timeString = "\(days) \(dayString) \(hours):\(minutes):\(seconds)"
 
         return timeString
+    }
+    func findDatesForClass(findClass: Class)->[Date]{
+        var dates: [Date] = []
+        var today = Date()
+        let formatter1 = DateFormatter()
+        formatter1.dateFormat = "E"
+        let todayWeekday = formatter1.string(from: today)
+        let formatter2 = DateFormatter()
+        formatter2.dateFormat = "dd/MM/yyyy"
+        let todayStr = formatter2.string(from: today)
+        today = formatter2.date(from: todayStr)!
+        for day in findClass.daysTimes.keys{
+
+            var dayDiff = dayToDayNumber[day]!-dayToDayNumber[todayWeekday]!
+            if dayDiff<0{
+                dayDiff = 7-dayDiff
+            }
+            for time in findClass.daysTimes[day]! {
+                let dateClass = today.addingTimeInterval(TimeInterval(86400*dayDiff))
+                var strDate = formatter2.string(from: dateClass)
+                strDate = strDate + " \(time)"
+                let formatter3 = DateFormatter()
+                formatter3.dateFormat = "dd/MM/yyyy HH:mm"
+                dates.append(formatter3.date(from: strDate)!)
+
+            }
+        }
+
+        for date in dates {
+            print(date)
+        }
+        return dates
+
     }
 
     var body: some View {
@@ -78,7 +111,7 @@ struct TimerView: View {
                 }
 
             }
-            Button(action: {print(100/60)}){
+            Button(action: {findDatesForClass(findClass: class1)}){
                 Text("go")
             }
         }
@@ -106,4 +139,15 @@ extension Date {
         return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
     }
 
+}
+
+extension Date {
+    func dayNumberOfWeek() -> Int? {
+        let ret = Calendar.current.dateComponents([.weekday], from: self).weekday
+        if ret != 1{
+            return ret! - 1
+        } else {
+            return 7
+        }
+    }
 }
