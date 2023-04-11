@@ -5,10 +5,39 @@ import SwiftUI
 class AppViewModel: ObservableObject {
     @Published var colors = [Color.c1, Color.c2, Color.c5, Color.c3, Color.c4]
     @Published var pickedColor = Color.c1
-    @Published var schedule: Schedule = Schedule(schedule: [:])
+    @Published var schedule: Schedule = Schedule(schedule: [1:[],2:[],3:[],4:[],5:[],6:[],7:[]])
+    @Published var classes: [Class] = []
+
     @Published var dayPickedForSchedule: String = "Mon"
 
     let defaults = UserDefaults.standard
+
+    func encodeClasses(objects: [Class]){
+        do {
+            // Create JSON Encoder
+            let encoder = JSONEncoder()
+
+            // Encode Note
+            let data = try encoder.encode(objects)
+            UserDefaults.standard.set(data, forKey: "Classes")
+
+        } catch {
+            print("Unable to Encode Classes (\(error))")
+        }
+    }
+    func encodeSchedule(object: Schedule){
+        do {
+            // Create JSON Encoder
+            let encoder = JSONEncoder()
+
+            // Encode Note
+            let data = try encoder.encode(object)
+            UserDefaults.standard.set(data, forKey: "Schedule")
+
+        } catch {
+            print("Unable to Encode Schedule (\(error))")
+        }
+    }
 }
 
 struct TabItem: Identifiable{

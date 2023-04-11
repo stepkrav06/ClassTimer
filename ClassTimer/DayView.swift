@@ -11,23 +11,36 @@ struct DayView: View {
     var lessons: [Lesson]
     var body: some View {
         VStack(spacing: 5){
-            ForEach(lessons) { lesson in
-                HStack{
-                    Text(lesson.name)
-                        .padding(.horizontal)
-                    Spacer()
-                    Text(lesson.time)
-                        .padding(.horizontal)
+            List{
+                ForEach(lessons) { lesson in
+                    HStack{
+                        VStack{
+                            Text(lesson.timeStart)
+                                .fontWeight(.thin)
+                                .font(.system(size: 12))
+                                .padding(.leading, 4)
 
+                            Text(lesson.timeEnd)
+                                .fontWeight(.thin)
+                                .font(.system(size: 12))
+                                .padding(.leading, 4)
+
+                        }
+                        RoundedRectangle(cornerRadius: 50, style: .continuous)
+                            .frame(width: 1)
+                            .padding(.trailing)
+                        Text(lesson.name)
+                            .fontWeight(.thin)
+                        Spacer()
+
+
+                    }
                 }
 
-                RoundedRectangle(cornerRadius: 50, style: .continuous)
-                    .frame(height: 1)
-                    .padding(.vertical, 4)
-                    .padding(.horizontal)
+
             }
 
-            
+
 
         }
     }
@@ -35,6 +48,6 @@ struct DayView: View {
 
 struct DayView_Previews: PreviewProvider {
     static var previews: some View {
-        DayView(lessons: [Lesson(name: "Math", time: "10:30"),Lesson(name: "Math", time: "10:30"),Lesson(name: "Math", time: "10:30")])
+        DayView(lessons: [])
     }
 }

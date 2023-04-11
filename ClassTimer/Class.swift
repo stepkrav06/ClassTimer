@@ -17,7 +17,8 @@ struct Class: Identifiable, Equatable, Codable, Hashable {
 struct Lesson: Identifiable, Equatable, Codable, Hashable {
     public var id = UUID()
     var name: String
-    var time: String
+    var timeStart: String
+    var timeEnd: String
 
 
 }

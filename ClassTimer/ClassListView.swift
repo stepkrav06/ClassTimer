@@ -56,7 +56,7 @@ struct ClassListView: View {
                             RoundedRectangle(cornerRadius: 50, style: .continuous)
                                 .frame(height: 2)
                                 .padding(.horizontal)
-                            DayView(lessons: (viewModel.schedule.schedule[selectedIndex]) ?? [])
+                            DayView(lessons: (viewModel.schedule.schedule[selectedIndex+1]) ?? [])
                         }
 
                     }

@@ -80,21 +80,8 @@ struct TimerView: View {
 
             }
             Button(action: {
-                let class1 = Class(name: "Math", daysTimes: ["Wed":["10:30", "11:30"]], dates: [])
-                let classes = [class1]
-                do {
-                    // Create JSON Encoder
-                    let encoder = JSONEncoder()
-
-                    // Encode Note
-                    let data = try encoder.encode(classes)
-
-                    // Write/Set Data
-                    UserDefaults.standard.set(data, forKey: "Classes")
-
-                } catch {
-                    print("Unable to Encode Array of Classes (\(error))")
-                }
+                UserDefaults.standard.removeObject(forKey: "Classes")
+                UserDefaults.standard.removeObject(forKey: "Schedule")
             }){
                 Text("go")
             }

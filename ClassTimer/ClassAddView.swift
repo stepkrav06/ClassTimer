@@ -13,31 +13,34 @@ struct ClassAddView: View {
     @State var daysPicked: [String] = []
     @State var pickedDay: String = ""
     @State var dateTimes: [String:[String]] = [:]
-    @State var chosenTime: Date = Date()
+    @State var chosenStartTime: Date = Date()
+    @State var chosenEndTime: Date = Date()
     var body: some View {
         VStack{
-            Text("Name")
-                .fontWeight(.thin)
-                .italic()
-                .frame(maxWidth: .infinity, alignment: .topLeading)
-                .padding(.top)
-                .padding(.horizontal)
-            RoundedRectangle(cornerRadius: 50, style: .continuous)
-                .frame(height: 2)
-                .padding(.horizontal)
-            TextField("", text: $name)
-                .textFieldStyle(OvalTextFieldStyle())
-                .padding()
-
-            Text("Days")
-                .fontWeight(.thin)
-                .italic()
-                .frame(maxWidth: .infinity, alignment: .topLeading)
-                .padding(.top)
-                .padding(.horizontal)
-            RoundedRectangle(cornerRadius: 50, style: .continuous)
-                .frame(height: 2)
-                .padding(.horizontal)
+            Group{
+                Text("Name")
+                    .fontWeight(.thin)
+                    .italic()
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .padding(.top)
+                    .padding(.horizontal)
+                RoundedRectangle(cornerRadius: 50, style: .continuous)
+                    .frame(height: 2)
+                    .padding(.horizontal)
+                TextField("", text: $name)
+                    .textFieldStyle(OvalTextFieldStyle())
+                    .padding()
+                
+                Text("Days")
+                    .fontWeight(.thin)
+                    .italic()
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .padding(.top)
+                    .padding(.horizontal)
+                RoundedRectangle(cornerRadius: 50, style: .continuous)
+                    .frame(height: 2)
+                    .padding(.horizontal)
+            }
             HStack(spacing:20){
                 ForEach(days, id: \.self){ day in
                     ZStack{
@@ -83,23 +86,30 @@ struct ClassAddView: View {
                                 .frame(maxWidth: .infinity, alignment: .topLeading)
 
                                 .padding(.leading)
-
-                            DatePicker("", selection: $chosenTime, displayedComponents: .hourAndMinute)
+                            DatePicker("", selection: $chosenStartTime, displayedComponents: .hourAndMinute)
                                 .labelsHidden()
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.trailing, 32)
+
+                            Text("-")
+                            DatePicker("", selection: $chosenEndTime, displayedComponents: .hourAndMinute)
+                                .labelsHidden()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.trailing)
                         }
 
                         Button {
-                            print(chosenTime)
+
                             if !daysPicked.contains(pickedDay){
                                 daysPicked.append(pickedDay)
                             }
                             let formatter = DateFormatter()
                             formatter.dateFormat = "HH:mm"
+                            let startString = formatter.string(from: chosenStartTime)
+                            let endString = formatter.string(from: chosenEndTime)
+                            let timeStr = startString + " - " + endString
                             var times = dateTimes[pickedDay] ?? []
-                            if !times.contains(formatter.string(from: chosenTime)){
-                                times.append(formatter.string(from: chosenTime))
+                            if !times.contains(timeStr){
+                                times.append(timeStr)
                             }
                             dateTimes[pickedDay] = times
 
@@ -131,12 +141,59 @@ struct ClassAddView: View {
                     .frame(height: 2)
                     .padding(.horizontal)
             }
-            ForEach(daysPicked, id:\.self){ day in
-                ForEach(dateTimes[day] ?? [], id:\.self){
-                    time in
-                    Text(day + ", \(time)")
+            List{
+                ForEach(daysPicked, id:\.self){ day in
+                    ForEach(dateTimes[day] ?? [], id:\.self){
+                        time in
+                        HStack{
+                            Text(day)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Text(time)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }
+                    }
                 }
             }
+            Button {
+                let class1 = Class(name: name, daysTimes: dateTimes, dates: [])
+                var classes = viewModel.classes
+                classes.append(class1)
+                viewModel.classes = classes
+                viewModel.encodeClasses(objects: classes)
+                for day in dateTimes.keys {
+                    let times = dateTimes[day]!
+                    var lessonsDay: [Lesson] = []
+                    for time in times {
+                        let strAr = time.components(separatedBy: " - ")
+                        let startTime = strAr[0]
+                        let endTime = strAr[1]
+                        let lesson = Lesson(name: name, timeStart: startTime, timeEnd: endTime)
+                        lessonsDay.append(lesson)
+                    }
+                    viewModel.schedule.schedule[dayToDayNumber[day]!]!.append(contentsOf: lessonsDay)
+                    viewModel.encodeSchedule(object: viewModel.schedule)
+
+
+
+                }
+
+                
+
+
+
+
+            } label: {
+                ZStack{
+                    RoundedRectangle(cornerRadius: 30)
+                        .stroke(Color.gray, lineWidth: 1)
+                    Text("Create class")
+                        .foregroundColor(Color.gray)
+                        .font(.system(size: 18))
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 30)
+            .padding()
         }
         .frame(maxHeight: .infinity, alignment: .top)
     }

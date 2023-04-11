@@ -19,10 +19,23 @@ struct ClassTimerApp: App {
 
                 // Decode Note
                 let classes = try decoder.decode([Class].self, from: data)
-                
+                viewModel.classes = classes
 
             } catch {
-                print("Unable to Decode Notes (\(error))")
+                print("Unable to Decode classes (\(error))")
+            }
+        }
+        if let data = UserDefaults.standard.data(forKey: "Schedule") {
+            do {
+                // Create JSON Decoder
+                let decoder = JSONDecoder()
+
+                // Decode Note
+                let schedule = try decoder.decode(Schedule.self, from: data)
+                viewModel.schedule = schedule
+
+            } catch {
+                print("Unable to Decode schedule (\(error))")
             }
         }
     }
