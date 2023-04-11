@@ -107,6 +107,11 @@ struct ClassAddView: View {
                             if !times.contains(timeStr){
                                 times.append(timeStr)
                             }
+                            times = times.sorted(by: {
+                                let formatter1 = DateFormatter()
+                                formatter1.dateFormat = "HH:mm"
+                                return formatter1.date(from: $0.components(separatedBy: " - ")[0])! < formatter1.date(from: $1.components(separatedBy: " - ")[0])!
+                            })
                             dateTimes[pickedDay] = times
 
 
@@ -151,7 +156,26 @@ struct ClassAddView: View {
                 }
             }
             Button {
-                let class1 = Class(name: name, daysTimes: dateTimes, dates: [])
+                var classDescription = ""
+                var times: [String] = []
+                for arr in dateTimes.values {
+                    times.append(contentsOf: arr)
+                }
+                times = times.unique()
+                for time in times {
+                    for day in dateTimes.keys {
+                        if dateTimes[day]!.contains(time) {
+                            classDescription += daysShort[dayToDayNumber[day]!-1]
+                        }
+                    }
+                    classDescription += " " + time
+                    classDescription += "\n"
+
+                }
+                classDescription.removeLast()
+
+
+                let class1 = Class(name: name, daysTimes: dateTimes, description: classDescription)
                 var classes = viewModel.classes
                 classes.append(class1)
                 viewModel.classes = classes
@@ -205,8 +229,15 @@ struct OvalTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding(10)
-            .background(Color.gray.opacity(0.1))
+            .background(Color.gray.opacity(0.2))
             .cornerRadius(15)
-            .shadow(color: .gray, radius: 2)
+
+    }
+}
+
+extension Sequence where Iterator.Element: Hashable {
+    func unique() -> [Iterator.Element] {
+        var seen: [Iterator.Element: Bool] = [:]
+        return self.filter { seen.updateValue(true, forKey: $0) == nil }
     }
 }

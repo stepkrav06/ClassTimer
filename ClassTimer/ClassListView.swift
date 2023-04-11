@@ -93,6 +93,33 @@ struct ClassListView: View {
                     .sheet(isPresented: $addingClass){
                         ClassAddView()
                     }
+                    List{
+                        ForEach(viewModel.classes){ cl in
+                            HStack{
+
+                                Text(cl.name)
+                                    .fontWeight(.thin)
+                                RoundedRectangle(cornerRadius: 50, style: .continuous)
+                                    .foregroundColor(viewModel.pickedColor)
+                                    .frame(width: 1)
+                                    .padding(.trailing)
+
+                                    Text(cl.description)
+                                        .fontWeight(.thin)
+
+                                        .padding(.leading, 4)
+
+
+
+                                Spacer()
+
+
+                            }
+                        }
+                    }
+                    .listStyle(.plain)
+                    
+
                 }
 
             }
@@ -106,39 +133,7 @@ struct ClassListView: View {
         .navigationTitle("Classes")
     }
     
-    func findDatesForClass(findClass: Class)->[Date]{
-        var dates: [Date] = []
-        var today = Date()
-        let formatter1 = DateFormatter()
-        formatter1.dateFormat = "E"
-        let todayWeekday = formatter1.string(from: today)
-        let formatter2 = DateFormatter()
-        formatter2.dateFormat = "dd/MM/yyyy"
-        let todayStr = formatter2.string(from: today)
-        today = formatter2.date(from: todayStr)!
-        for day in findClass.daysTimes.keys{
-
-            var dayDiff = dayToDayNumber[day]!-dayToDayNumber[todayWeekday]!
-            if dayDiff<0{
-                dayDiff = 7-dayDiff
-            }
-            for time in findClass.daysTimes[day]! {
-                let dateClass = today.addingTimeInterval(TimeInterval(86400*dayDiff))
-                var strDate = formatter2.string(from: dateClass)
-                strDate = strDate + " \(time)"
-                let formatter3 = DateFormatter()
-                formatter3.dateFormat = "dd/MM/yyyy HH:mm"
-                dates.append(formatter3.date(from: strDate)!)
-
-            }
-        }
-
-        for date in dates {
-            print(date)
-        }
-        return dates
-
-    }
+    
 }
 
 struct ClassListView_Previews: PreviewProvider {

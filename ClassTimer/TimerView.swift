@@ -14,7 +14,7 @@ struct TimerView: View {
     let targetDate = Date(timeIntervalSinceNow: TimeInterval(120))
     @State var dateDiff = Date(timeIntervalSinceNow: TimeInterval(1000)) - Date()
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    let class1: Class = Class(name: "Class", daysTimes: ["Wed":["10:30", "12:30"]], dates: [])
+    
     func calculateTimeLeft(interval: TimeInterval) -> String {
         var roundedInterval = Int(round(interval))
         var timeString = ""

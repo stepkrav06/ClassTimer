@@ -8,19 +8,25 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("isDarkMode") private var isDarkMode = false
     @EnvironmentObject var viewModel: AppViewModel
     @State private var customColor =
-    Color(.sRGB, red: 0, green: 0, blue: 0.01)
-    var body: some View {
-        VStack{
+    Color(.sRGB, red: 0, green: 0, blue: 0)
 
+
+    var body: some View {
+        VStack(spacing: 5){
+            Group{
                 Text("Theme color")
-                    .font(.system(size: 22))
-                    .fontDesign(.rounded)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .frame(minWidth: 130)
-                    .padding(.horizontal, 20)
+                    .fontWeight(.thin)
+                    .italic()
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .padding(.top)
+                    .padding(.horizontal)
+                RoundedRectangle(cornerRadius: 50, style: .continuous)
+                    .frame(height: 2)
+                    .padding(.horizontal)
+            }
 
                 HStack {
                     ForEach(viewModel.colors, id: \.self){ color in
@@ -43,6 +49,42 @@ struct SettingsView: View {
 
                 }.frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
+            Group{
+                Text("Notifications")
+                    .fontWeight(.thin)
+                    .italic()
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .padding(.top)
+                    .padding(.horizontal)
+                RoundedRectangle(cornerRadius: 50, style: .continuous)
+                    .frame(height: 2)
+                    .padding(.horizontal)
+            }
+            Group{
+                Text("Appearance")
+                    .fontWeight(.thin)
+                    .italic()
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .padding(.top)
+                    .padding(.horizontal)
+                RoundedRectangle(cornerRadius: 50, style: .continuous)
+                    .frame(height: 2)
+                    .padding(.horizontal)
+                
+            }
+
+            Toggle(isOn: $isDarkMode){
+                Text("Dark mode")
+                    .fontWeight(.medium)
+                    .italic()
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+
+
+            }
+            .padding(.top)
+            .padding(.horizontal)
+
+
             Spacer()
 
 

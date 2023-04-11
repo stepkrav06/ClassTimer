@@ -8,6 +8,7 @@ class AppViewModel: ObservableObject {
     @Published var schedule: Schedule = Schedule(schedule: [1:[],2:[],3:[],4:[],5:[],6:[],7:[]])
     @Published var classes: [Class] = []
 
+
     @Published var dayPickedForSchedule: String = "Mon"
 
     let defaults = UserDefaults.standard
@@ -37,6 +38,45 @@ class AppViewModel: ObservableObject {
         } catch {
             print("Unable to Encode Schedule (\(error))")
         }
+    }
+    func findDatesForWeek()->[ClassDate]{
+        var classDates: [ClassDate] = []
+        var today = Date()
+        let formatter1 = DateFormatter()
+        formatter1.dateFormat = "E"
+        let todayWeekday = formatter1.string(from: today)
+        let formatter2 = DateFormatter()
+        formatter2.dateFormat = "dd/MM/yyyy"
+        let todayStr = formatter2.string(from: today)
+        today = formatter2.date(from: todayStr)!
+        for cl in classes {
+            for day in cl.daysTimes.keys{
+
+                var dayDiff = dayToDayNumber[day]!-dayToDayNumber[todayWeekday]!
+                if dayDiff<0{
+                    dayDiff = 7-dayDiff
+                }
+                for time in cl.daysTimes[day]! {
+                    let startTime = time.components(separatedBy: " - ")[0]
+                    let dateClass = today.addingTimeInterval(TimeInterval(86400*dayDiff))
+                    var strDate = formatter2.string(from: dateClass)
+                    strDate = strDate + " \(startTime)"
+                    let formatter3 = DateFormatter()
+                    formatter3.dateFormat = "dd/MM/yyyy HH:mm"
+                    let classDate = ClassDate(name: day, date: formatter3.date(from: strDate)!)
+                    classDates.append(classDate)
+
+
+                }
+            }
+        }
+
+        for classDate in classDates {
+            print(classDate.name)
+            print(classDate.date)
+        }
+        return classDates
+
     }
 }
 
@@ -70,6 +110,8 @@ extension Color {
 }
 public let dayToDayNumber = ["Mon":1, "Tue":2, "Wed":3, "Thu":4, "Fri":5, "Sat":6, "Sun":7]
 public let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+public let daysShort = ["M", "T", "W", "Th", "F", "S", "Su"]
+
 
 extension UserDefaults {
   func colorForKey(key: String) -> Color {

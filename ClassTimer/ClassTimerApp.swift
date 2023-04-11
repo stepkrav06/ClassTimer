@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct ClassTimerApp: App {
+    @AppStorage("isDarkMode") private var isDarkMode = false
     let viewModel = AppViewModel()
     init(){
         viewModel.pickedColor = viewModel.defaults.colorForKey(key: "AccentColor")
+
         if let data = UserDefaults.standard.data(forKey: "Classes") {
             do {
                 // Create JSON Decoder
@@ -44,6 +46,7 @@ struct ClassTimerApp: App {
 
         WindowGroup {
                 TabView()
+                .preferredColorScheme(isDarkMode ? .dark : .light)
                 .environmentObject(viewModel)
             
         }
