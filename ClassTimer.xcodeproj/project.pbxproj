@@ -62,6 +62,7 @@
 		2783761129E492CA00973219 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		2783761529E4AFDB00973219 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
 		27EE8A7029E5E1030072FF31 /* EditClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClassView.swift; sourceTree = "<group>"; };
+		27EE8A7429E5F1390072FF31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +113,7 @@
 		2754935F29E3E42F0052F42F /* ClassTimer */ = {
 			isa = PBXGroup;
 			children = (
+				27EE8A7429E5F1390072FF31 /* Info.plist */,
 				27EE8A7029E5E1030072FF31 /* EditClassView.swift */,
 				2754936029E3E42F0052F42F /* ClassTimerApp.swift */,
 				2783761129E492CA00973219 /* DayView.swift */,
@@ -456,6 +458,7 @@
 				DEVELOPMENT_TEAM = 4Q67W3J8LP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ClassTimer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -485,6 +488,7 @@
 				DEVELOPMENT_TEAM = 4Q67W3J8LP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ClassTimer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

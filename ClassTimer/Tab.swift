@@ -8,6 +8,7 @@ class AppViewModel: ObservableObject {
     @Published var schedule: Schedule = Schedule(schedule: [1:[],2:[],3:[],4:[],5:[],6:[],7:[]])
     @Published var classes: [Class] = []
     @Published var lessons: [Lesson] = []
+    @Published var notificationTimes: [TimeInterval] = []
 
 
     @Published var dayPickedForSchedule: String = "Mon"
@@ -45,6 +46,7 @@ class AppViewModel: ObservableObject {
         var today = Date()
         let formatter1 = DateFormatter()
         formatter1.dateFormat = "E"
+        formatter1.locale = Locale(identifier: "en_US")
         let todayWeekday = formatter1.string(from: today)
         let formatter2 = DateFormatter()
         formatter2.dateFormat = "dd/MM/yyyy"
@@ -64,7 +66,7 @@ class AppViewModel: ObservableObject {
                     strDate = strDate + " \(startTime)"
                     let formatter3 = DateFormatter()
                     formatter3.dateFormat = "dd/MM/yyyy HH:mm"
-                    let classDate = ClassDate(name: day, date: formatter3.date(from: strDate)!)
+                    let classDate = ClassDate(name: cl.name, date: formatter3.date(from: strDate)!)
                     classDates.append(classDate)
 
 

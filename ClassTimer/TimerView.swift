@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct TimerView: View {
     @EnvironmentObject var viewModel: AppViewModel
@@ -82,6 +83,13 @@ struct TimerView: View {
             Button(action: {
                 UserDefaults.standard.removeObject(forKey: "Classes")
                 UserDefaults.standard.removeObject(forKey: "Schedule")
+                UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: {requests in
+
+                    for oldRequest in requests {
+                        print(oldRequest.content.body)
+                    }
+                })
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
             }){
                 Text("go")
             }
