@@ -66,7 +66,7 @@ struct ClassAddView: View {
             .padding()
 
             Group{
-                Text("Time")
+                Text("Time" + " (\(pickedDay))")
                     .fontWeight(.thin)
                     .italic()
                     .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -80,15 +80,11 @@ struct ClassAddView: View {
                 if pickedDay != ""{
                     HStack{
                         HStack{
-                            Text(pickedDay)
-                                .fontWeight(.medium)
-                                .italic()
-                                .frame(maxWidth: .infinity, alignment: .topLeading)
 
-                                .padding(.leading)
                             DatePicker("", selection: $chosenStartTime, displayedComponents: .hourAndMinute)
                                 .labelsHidden()
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.leading)
 
                             Text("-")
                             DatePicker("", selection: $chosenEndTime, displayedComponents: .hourAndMinute)
