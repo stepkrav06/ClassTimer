@@ -22,6 +22,7 @@
 		2754939729E42CF00052F42F /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939629E42CF00052F42F /* Class.swift */; };
 		2783761229E492CA00973219 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761129E492CA00973219 /* DayView.swift */; };
 		2783761629E4AFDB00973219 /* ClassAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761529E4AFDB00973219 /* ClassAddView.swift */; };
+		27EE8A7129E5E1030072FF31 /* EditClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EE8A7029E5E1030072FF31 /* EditClassView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		2754939629E42CF00052F42F /* Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
 		2783761129E492CA00973219 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		2783761529E4AFDB00973219 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
+		27EE8A7029E5E1030072FF31 /* EditClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClassView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 		2754935F29E3E42F0052F42F /* ClassTimer */ = {
 			isa = PBXGroup;
 			children = (
+				27EE8A7029E5E1030072FF31 /* EditClassView.swift */,
 				2754936029E3E42F0052F42F /* ClassTimerApp.swift */,
 				2783761129E492CA00973219 /* DayView.swift */,
 				2754936229E3E42F0052F42F /* ContentView.swift */,
@@ -288,6 +291,7 @@
 				2754939729E42CF00052F42F /* Class.swift in Sources */,
 				2754939529E42C9B0052F42F /* ClassListView.swift in Sources */,
 				2754939129E400360052F42F /* SettingsView.swift in Sources */,
+				27EE8A7129E5E1030072FF31 /* EditClassView.swift in Sources */,
 				2754936129E3E42F0052F42F /* ClassTimerApp.swift in Sources */,
 				2754938D29E3F8FB0052F42F /* Tab.swift in Sources */,
 				2783761629E4AFDB00973219 /* ClassAddView.swift in Sources */,

@@ -12,7 +12,7 @@ struct SettingsView: View {
     @EnvironmentObject var viewModel: AppViewModel
     @State private var customColor =
     Color(.sRGB, red: 0, green: 0, blue: 0)
-
+    
 
     var body: some View {
         VStack(spacing: 5){
@@ -72,7 +72,6 @@ struct SettingsView: View {
                     .padding(.horizontal)
                 
             }
-
             Toggle(isOn: $isDarkMode){
                 Text("Dark mode")
                     .fontWeight(.medium)
@@ -83,8 +82,6 @@ struct SettingsView: View {
             }
             .padding(.top)
             .padding(.horizontal)
-
-
             Spacer()
 
 

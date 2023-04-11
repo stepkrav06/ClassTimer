@@ -7,6 +7,7 @@ class AppViewModel: ObservableObject {
     @Published var pickedColor = Color.c1
     @Published var schedule: Schedule = Schedule(schedule: [1:[],2:[],3:[],4:[],5:[],6:[],7:[]])
     @Published var classes: [Class] = []
+    @Published var lessons: [Lesson] = []
 
 
     @Published var dayPickedForSchedule: String = "Mon"
@@ -77,6 +78,20 @@ class AppViewModel: ObservableObject {
         }
         return classDates
 
+    }
+    func removeClass(cl: Class){
+        let indClass = classes.firstIndex(of: cl)!
+        classes.remove(at: indClass)
+        for day in schedule.schedule.keys {
+            for lesson in schedule.schedule[day]! {
+                if lesson.name == cl.name {
+                    let indLesson = schedule.schedule[day]!.firstIndex(of: lesson)!
+                    schedule.schedule[day]!.remove(at: indLesson)
+                }
+            }
+        }
+        encodeClasses(objects: classes)
+        encodeSchedule(object: schedule)
     }
 }
 

@@ -35,6 +35,11 @@ struct ClassTimerApp: App {
                 // Decode Note
                 let schedule = try decoder.decode(Schedule.self, from: data)
                 viewModel.schedule = schedule
+                var lessons: [Lesson] = []
+                for day in schedule.schedule.keys {
+                    lessons.append(contentsOf: schedule.schedule[day]!)
+                }
+                viewModel.lessons = lessons
 
             } catch {
                 print("Unable to Decode schedule (\(error))")

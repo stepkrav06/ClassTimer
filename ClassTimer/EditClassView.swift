@@ -1,15 +1,16 @@
 //
-//  ClassAddView.swift
+//  EditClassView.swift
 //  ClassTimer
 //
-//  Created by Степан Кравцов on 10.04.2023.
+//  Created by Степан Кравцов on 11.04.2023.
 //
 
 import SwiftUI
 
-struct ClassAddView: View {
+struct EditClassView: View {
     @EnvironmentObject var viewModel: AppViewModel
     @Environment(\.dismiss) var dismiss
+    var classToEdit: Class
     @State var name: String = ""
     @State var daysPicked: [String] = []
     @State var pickedDay: String = ""
@@ -35,7 +36,7 @@ struct ClassAddView: View {
                 TextField("", text: $name)
                     .textFieldStyle(OvalTextFieldStyle())
                     .padding()
-                
+
                 Text("Days")
                     .fontWeight(.thin)
                     .italic()
@@ -159,7 +160,8 @@ struct ClassAddView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             Text(time)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
-                        }.swipeActions(allowsFullSwipe: false) {
+                        }
+                        .swipeActions(allowsFullSwipe: false) {
                             Button(role: .destructive) {
                                 let ind = dateTimes[day]!.firstIndex(of: time)!
                                 dateTimes[day]!.remove(at: ind)
@@ -185,7 +187,7 @@ struct ClassAddView: View {
                 ZStack{
                     RoundedRectangle(cornerRadius: 30)
                         .stroke(Color.gray, lineWidth: 1)
-                    Text("Create class")
+                    Text("Save class")
                         .foregroundColor(Color.gray)
                         .font(.system(size: 18))
                 }
@@ -194,14 +196,20 @@ struct ClassAddView: View {
             .frame(height: 30)
             .padding()
         }
+        .onAppear{
+            name = classToEdit.name
+            dateTimes = classToEdit.daysTimes
+            daysPicked = Array(classToEdit.daysTimes.keys) as [String]
+        }
         .alert("Some fields are empty or no times were added. Cannot proceed.", isPresented: $emptyFieldsAlert) {
                     Button("OK", role: .cancel) { }
                 }
         .alert("The chosen times are incorrect. Please choose different times.", isPresented: $incorrectTimesAlert) {
                     Button("OK", role: .cancel) { }
                 }
-        .alert("Are you sure you want to create this class?", isPresented: $createClassAlert) {
+        .alert("Are you sure you want to save this class?", isPresented: $createClassAlert) {
             Button("OK", role: .cancel) {
+                viewModel.removeClass(cl: classToEdit)
                 var classDescription = ""
                 var times: [String] = []
                 for arr in dateTimes.values {
@@ -209,9 +217,7 @@ struct ClassAddView: View {
                 }
                 times = times.unique()
                 for time in times {
-                    for day in dateTimes.keys.sorted(by: {
-                        dayToDayNumber[$0]!<dayToDayNumber[$1]!
-                    }) {
+                    for day in dateTimes.keys {
                         if dateTimes[day]!.contains(time) {
                             classDescription += daysShort[dayToDayNumber[day]!-1]
                         }
@@ -253,25 +259,8 @@ struct ClassAddView: View {
     }
 }
 
-struct ClassAddView_Previews: PreviewProvider {
+struct EditClassView_Previews: PreviewProvider {
     static var previews: some View {
-        ClassAddView()
-    }
-}
-
-struct OvalTextFieldStyle: TextFieldStyle {
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
-            .padding(10)
-            .background(Color.gray.opacity(0.2))
-            .cornerRadius(15)
-
-    }
-}
-
-extension Sequence where Iterator.Element: Hashable {
-    func unique() -> [Iterator.Element] {
-        var seen: [Iterator.Element: Bool] = [:]
-        return self.filter { seen.updateValue(true, forKey: $0) == nil }
+        EditClassView(classToEdit: Class(name: "", daysTimes: [:], description: ""))
     }
 }

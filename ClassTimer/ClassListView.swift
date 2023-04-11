@@ -13,6 +13,9 @@ struct ClassListView: View {
     @State var selectedIndex: Int = 0
     @State var addingClass = false
     let dayLetters = ["M","Tu","W","Th","F","Sa","Su"]
+    @State var editClassSheet = false
+    @State var classToEditOrDelete: Class? = nil
+    @State var deleteClassAlert = false
     var body: some View {
         VStack{
             Picker("", selection: $pick) {
@@ -47,16 +50,18 @@ struct ClassListView: View {
                 }
                     VStack(spacing: 5){
                         Group{
-                            Text(days[selectedIndex])
-                                .fontWeight(.thin)
-                                .italic()
-                                .frame(maxWidth: .infinity, alignment: .topLeading)
-                                .padding(.top)
-                                .padding(.horizontal)
-                            RoundedRectangle(cornerRadius: 50, style: .continuous)
-                                .frame(height: 2)
-                                .padding(.horizontal)
-                            DayView(lessons: (viewModel.schedule.schedule[selectedIndex+1]) ?? [])
+
+                                Text(days[selectedIndex])
+                                    .fontWeight(.thin)
+                                    .italic()
+                                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                                    .padding(.top)
+                                    .padding(.horizontal)
+                                RoundedRectangle(cornerRadius: 50, style: .continuous)
+                                    .frame(height: 2)
+                                    .padding(.horizontal)
+                                DayView(lessons: (viewModel.schedule.schedule[selectedIndex+1]) ?? [])
+
                         }
 
                     }
@@ -66,46 +71,47 @@ struct ClassListView: View {
             }
             if pick == "Classes"{
                 VStack(spacing: 5){
-                    Text("Classes")
-                        .fontWeight(.thin)
-                        .italic()
-                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                    HStack{
+                        Text("Classes")
+                            .fontWeight(.thin)
+                            .italic()
+                            .frame(maxWidth: .infinity, alignment: .topLeading)
+                            .padding(.top)
+                            .padding(.horizontal)
+                        Button {
+                            addingClass.toggle()
+
+                        } label: {
+                            ZStack{
+                                Image(systemName: "plus")
+                                    .foregroundColor(Color.gray)
+                                    .font(.system(size: 20))
+                            }
+                            }
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .frame(height: 30)
                         .padding(.top)
                         .padding(.horizontal)
+                        .sheet(isPresented: $addingClass){
+                            ClassAddView()
+                        }
+                    }
                     RoundedRectangle(cornerRadius: 50, style: .continuous)
                         .frame(height: 2)
                         .padding(.horizontal)
-                    Button {
-                        addingClass = true
 
-                    } label: {
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 30)
-                                .stroke(Color.gray, lineWidth: 1)
-                            Image(systemName: "plus")
-                                .foregroundColor(Color.gray)
-                                .font(.system(size: 20))
-                        }
-                        }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 30)
-                    .padding()
-                    .sheet(isPresented: $addingClass){
-                        ClassAddView()
-                    }
                     List{
                         ForEach(viewModel.classes){ cl in
                             HStack{
-
+                                
                                 Text(cl.name)
-                                    .fontWeight(.thin)
-                                RoundedRectangle(cornerRadius: 50, style: .continuous)
-                                    .foregroundColor(viewModel.pickedColor)
-                                    .frame(width: 1)
-                                    .padding(.trailing)
+                                    .fontWeight(.medium)
+                                    .frame(alignment: .leading)
+
 
                                     Text(cl.description)
                                         .fontWeight(.thin)
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
 
                                         .padding(.leading, 4)
 
@@ -115,8 +121,27 @@ struct ClassListView: View {
 
 
                             }
+                            .swipeActions(allowsFullSwipe: false) {
+                                                        Button {
+                                                            editClassSheet.toggle()
+                                                        } label: {
+                                                            Label("Edit", systemImage: "pencil")
+                                                        }
+                                                        .tint(.indigo)
+
+                                                        Button(role: .destructive) {
+                                                            classToEditOrDelete = cl
+                                                            deleteClassAlert.toggle()
+                                                        } label: {
+                                                            Label("Delete", systemImage: "trash.fill")
+                                                        }
+                                                    }
+                            .sheet(isPresented: $editClassSheet){
+                                EditClassView(classToEdit: cl)
+                            }
                         }
                     }
+
                     .listStyle(.plain)
                     
 
@@ -129,6 +154,20 @@ struct ClassListView: View {
 
 
         }
+        .onAppear{
+            let today = Date()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "E"
+            formatter.locale = Locale(identifier: "en_US")
+            let todayDay = formatter.string(from: today)
+            selectedIndex = dayToDayNumber[todayDay]!-1
+        }
+        .alert("Are you sure you want to delete this class?", isPresented: $deleteClassAlert) {
+            Button("Cancel", role: .cancel) { }
+            Button("Delete", role: .destructive) {
+                viewModel.removeClass(cl: classToEditOrDelete!)
+            }
+                }
         .frame(maxHeight: .infinity, alignment: .top)
         .navigationTitle("Classes")
     }

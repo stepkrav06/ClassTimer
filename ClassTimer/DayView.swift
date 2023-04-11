@@ -21,7 +21,7 @@ struct DayView: View {
                     HStack{
                         VStack{
                             Text(lesson.timeStart)
-                                .fontWeight(.thin)
+                                .fontWeight(.medium)
                                 .font(.system(size: 12))
                                 .padding(.leading, 4)
 
@@ -37,7 +37,7 @@ struct DayView: View {
                             .frame(width: 1)
                             .padding(.trailing)
                         Text(lesson.name)
-                            .fontWeight(.thin)
+                            .fontWeight(.medium)
                         Spacer()
 
 
@@ -51,6 +51,7 @@ struct DayView: View {
 
 
         }
+
     }
 }
 
