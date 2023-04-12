@@ -14,13 +14,19 @@ struct SettingsView: View {
     @EnvironmentObject var viewModel: AppViewModel
     @State private var customColor =
     Color(.sRGB, red: 0, green: 0, blue: 0)
-    @State var notificationStatus = false
+    @State var notificationStatus: Bool = false
+    @State var wantSecondNotification: Bool = false
+    @State var firstNotificationTime = "None"
+    @State var secondNotificationTime = "None"
+    var notificationTimes: [String] = ["None", "5 min before", "10 min before", "15 min before","30 min before", "1 hour before","2 hours before"]
+   
+
     
 
     var body: some View {
         VStack(spacing: 5){
             Group{
-                Text("Theme color")
+                Text("Accent color")
                     .fontWeight(.thin)
                     .italic()
                     .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -63,76 +69,74 @@ struct SettingsView: View {
                     .frame(height: 2)
                     .padding(.horizontal)
             }
-            HStack{
-                Text("Notifications")
-                    .fontWeight(.medium)
-                    .italic()
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
 
-
-                if notificationStatus {
-                    Text("Active")
-                        .fontWeight(.medium)
-                        .italic()
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                } else {
-                    Text("Not active")
-                        .fontWeight(.medium)
-                        .italic()
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-
-                }
-
-            }
-            .padding(.top)
-            .padding(.horizontal)
-            Button("Request Permission") {
-                let isRegisteredForRemoteNotifications = UIApplication.shared.isRegisteredForRemoteNotifications
-                if !isRegisteredForRemoteNotifications {
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
-                }
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                    if success {
-                        print("All set!")
-                    } else if let error = error {
-                        print(error.localizedDescription)
+            Toggle("Class notifications", isOn: $notificationStatus)
+                .toggleStyle(SwitchToggleStyle(tint: viewModel.pickedColor))
+                .onChange(of: notificationStatus) { value in
+                    viewModel.wantNotifications = value
+                    viewModel.defaults.setValue(value, forKey: "wantNotifications")
+                    if value {
+                        let isRegisteredForRemoteNotifications = UIApplication.shared.isRegisteredForRemoteNotifications
+                        if !isRegisteredForRemoteNotifications {
+                            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+                        }
+                        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                            if success {
+                                print("All set!")
+                            } else if let error = error {
+                                print(error.localizedDescription)
+                            }
+                        }
                     }
                 }
-                }
+            .fontWeight(.medium)
+            .font(.system(size: 20))
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+            .padding(.top)
+            .padding(.horizontal)
+            VStack{
 
-                Button("Schedule Notification") {
-                    let date = Date().addingTimeInterval(30)
-                    let content = UNMutableNotificationContent()
-                    content.title = "You have a class soon!"
-                    content.subtitle = "It looks hungry"
-                    content.sound = UNNotificationSound.default
+                    List{
 
-                    // show this notification five seconds from now
-                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: date.timeIntervalSince(Date()), repeats: false)
+                            Picker("First", selection: $firstNotificationTime) {
+                                ForEach(notificationTimes, id: \.self) {
+                                    Text($0)
+                                }
+                            }
+                            .onChange(of: firstNotificationTime){ time in
+                                viewModel.firstNotificationTime = stringToTimeInterval[time]!
+                                viewModel.defaults.set(stringToTimeInterval[time]!, forKey: "firstNotificationTime")
 
-                    // choose a random identifier
-                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
-                    // add our notification request
-                   // UNUserNotificationCenter.current().add(request)
-                    UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: {requests in
-                        var arr: [Bool] = []
-                        for oldRequest in requests {
-                            print(request.content == oldRequest.content)
-                            arr.append(request.content == oldRequest.content)
-                        }
-                        for index in arr.indices {
-                            arr[index] = !arr[index]
+                            }
 
 
-                        }
+                            Picker("Second", selection: $secondNotificationTime) {
+                                ForEach(notificationTimes, id: \.self) {
+                                    Text($0)
+                                }
+                            }
+                            .onChange(of: secondNotificationTime){ time in
+                                if time != "None" {
+                                    viewModel.wantSecondNotification = true
+                                    viewModel.defaults.setValue(true, forKey: "wantSecondNotification")
+                                } else {
+                                    viewModel.wantSecondNotification = false
+                                    viewModel.defaults.setValue(false, forKey: "wantSecondNotification")
+                                }
+                                viewModel.secondNotificationTime = stringToTimeInterval[time]!
+                                viewModel.defaults.set(stringToTimeInterval[time]!, forKey: "secondNotificationTime")
 
-                        if arr.allSatisfy({$0}) {
+                            }
 
-                            UNUserNotificationCenter.current().add(request)
-                        }
-                    })
-                }
+                    }
+                    .frame(maxHeight: 150)
+
+                .scrollDisabled(true)
+
+
+            }
+
+                
 
             Group{
                 Text("Appearance")
@@ -149,11 +153,13 @@ struct SettingsView: View {
             Toggle(isOn: $isDarkMode){
                 Text("Dark mode")
                     .fontWeight(.medium)
+                    .font(.system(size: 20))
                     .italic()
                     .frame(maxWidth: .infinity, alignment: .topLeading)
 
 
             }
+            .toggleStyle(SwitchToggleStyle(tint: viewModel.pickedColor))
             .padding(.top)
             .padding(.horizontal)
             Spacer()
@@ -163,6 +169,9 @@ struct SettingsView: View {
 
         }
         .onAppear(){
+            firstNotificationTime = timeIntervalToString[viewModel.firstNotificationTime]!
+            secondNotificationTime = timeIntervalToString[viewModel.secondNotificationTime]!
+
             UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
                 if settings.authorizationStatus == .denied {
                     notificationStatus = false
@@ -195,5 +204,24 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
             .environmentObject(viewModel)
+    }
+}
+
+struct CheckToggleStyle: ToggleStyle {
+    @EnvironmentObject var viewModel: AppViewModel
+    func makeBody(configuration: Configuration) -> some View {
+        Button {
+            configuration.isOn.toggle()
+        } label: {
+            Label {
+                configuration.label
+            } icon: {
+                Image(systemName: configuration.isOn ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(configuration.isOn ? viewModel.pickedColor : .secondary)
+                    .accessibility(label: Text(configuration.isOn ? "Checked" : "Unchecked"))
+                    .imageScale(.large)
+            }
+        }
+        .buttonStyle(PlainButtonStyle())
     }
 }

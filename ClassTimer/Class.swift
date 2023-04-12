@@ -26,9 +26,5 @@ struct Schedule: Identifiable, Equatable, Codable, Hashable {
     public var id = UUID()
     var schedule: [Int:[Lesson]]
 }
-struct ClassDate: Identifiable, Equatable, Codable, Hashable {
-    public var id = UUID()
-    var name: String
-    var date: Date
-}
+
 

@@ -17,6 +17,15 @@ struct ClassTimerApp: App {
     let viewModel = AppViewModel()
     init(){
         viewModel.pickedColor = viewModel.defaults.colorForKey(key: "AccentColor")
+        viewModel.wantNotifications = viewModel.defaults.bool(forKey: "wantNotifications")
+        viewModel.wantSecondNotification = viewModel.defaults.bool(forKey: "wantSecondNotification")
+        viewModel.firstNotificationTime = TimeInterval(viewModel.defaults.float(forKey: "firstNotificationTime"))
+        viewModel.secondNotificationTime = TimeInterval(viewModel.defaults.float(forKey: "secondNotificationTime"))
+        viewModel.countdownStartTime = viewModel.defaults.value(forKey: "countdownStartTime") as? Date ?? Date()
+        viewModel.countdownStartClassTime = viewModel.defaults.value(forKey: "countdownStartClassTime") as? Date ?? Date()
+        viewModel.countdownTimeLength = TimeInterval(viewModel.defaults.float(forKey: "countdownTimeLength"))
+        
+        
 
         if let data = UserDefaults.standard.data(forKey: "Classes") {
             do {
@@ -38,12 +47,14 @@ struct ClassTimerApp: App {
 
                 // Decode Note
                 let schedule = try decoder.decode(Schedule.self, from: data)
+                print(schedule)
                 viewModel.schedule = schedule
                 var lessons: [Lesson] = []
                 for day in schedule.schedule.keys {
                     lessons.append(contentsOf: schedule.schedule[day]!)
                 }
                 viewModel.lessons = lessons
+
 
             } catch {
                 print("Unable to Decode schedule (\(error))")
@@ -53,50 +64,83 @@ struct ClassTimerApp: App {
 
 
     func scheduleNotificationsForWeek() {
-        print("scheduling notifications")
-        let dateClasses = viewModel.findDatesForWeek()
-        let notificationTimes: [TimeInterval] = []
-        for time in notificationTimes {
-            let time = "15 minutes"
-            for dateClass in dateClasses {
-                let content = UNMutableNotificationContent()
-                content.title = "Class notification"
-                content.subtitle = "\(dateClass.name) is in \(time)"
-                content.sound = UNNotificationSound.default
-                
-                // show this notification five seconds from now
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: (dateClass.date - 60 * 15).timeIntervalSince(Date()), repeats: false)
-                
-                // choose a random identifier
-                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                
-                // add our notification request
-                // UNUserNotificationCenter.current().add(request)
-                UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: {requests in
-                    var arr: [Bool] = []
-                    for oldRequest in requests {
-                        print(oldRequest.content)
-                        arr.append(request.content == oldRequest.content)
-                    }
-                    for index in arr.indices {
-                        arr[index] = !arr[index]
-                        
-                        
-                    }
-                    
-                    if arr.allSatisfy({$0}) {
-                        
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+
+        for cl in viewModel.classes {
+            for day in cl.daysTimes.keys {
+                let dayNumber = dayToDayNumberGregorian[day]!
+                for time in cl.daysTimes[day]! {
+                    let startTime = time.components(separatedBy: " - ")[0]
+                    // first notification time
+                    print("For class \(cl.name):")
+                    if viewModel.wantNotifications{
+                        var classHour = Int(startTime.components(separatedBy: ":")[0])!
+                        var classMin = Int(startTime.components(separatedBy: ":")[1])!
+                        if classMin - Int(viewModel.firstNotificationTime) % 3600 / 60 < 0 {
+                            classHour = classHour - 1 - Int(viewModel.firstNotificationTime) / 3600 / 60
+                            classMin = classMin - Int(viewModel.firstNotificationTime) % 3600 / 60 + 60
+                        } else {
+                            classHour = classHour - Int(viewModel.firstNotificationTime) / 3600 / 60
+                            classMin = classMin - Int(viewModel.firstNotificationTime) % 3600 / 60
+                        }
+                        var dateInfo = DateComponents()
+                        dateInfo.weekday = dayNumber
+                        dateInfo.hour = classHour
+                        dateInfo.minute = classMin
+                        let content = UNMutableNotificationContent()
+                        content.title = "\(cl.name) is in \(viewModel.timeIntervalToStringTime(interval: viewModel.firstNotificationTime))"
+                        content.subtitle = ""
+                        content.sound = UNNotificationSound.default
+                        let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: true)
+                        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
                         UNUserNotificationCenter.current().add(request)
+                        print("Scheduled for \(dateInfo)")
                     }
-                })
+                    if viewModel.wantSecondNotification {
+                        var classHour = Int(startTime.components(separatedBy: ":")[0])!
+                        var classMin = Int(startTime.components(separatedBy: ":")[1])!
+                        if classMin - Int(viewModel.secondNotificationTime) % 3600 / 60 < 0 {
+                            classHour = classHour - 1 - Int(viewModel.secondNotificationTime) / 3600 / 60
+                            classMin = classMin - Int(viewModel.secondNotificationTime) % 3600 / 60 + 60
+                        } else {
+                            classHour = classHour - Int(viewModel.secondNotificationTime) / 3600 / 60
+                            classMin = classMin - Int(viewModel.secondNotificationTime) % 3600 / 60
+                        }
+                        var dateInfo = DateComponents()
+                        dateInfo.weekday = dayNumber
+                        dateInfo.hour = classHour
+                        dateInfo.minute = classMin
+                        let content = UNMutableNotificationContent()
+                        content.title = "\(cl.name) is in \(viewModel.timeIntervalToStringTime(interval: viewModel.secondNotificationTime))"
+                        content.subtitle = ""
+                        content.sound = UNNotificationSound.default
+                        let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: true)
+                        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                        UNUserNotificationCenter.current().add(request)
+                        print("Scheduled for \(dateInfo)")
+                    }
+
+
+                }
+
             }
+
+            
+
         }
+
+
+
+
+
+
     }
+
     var body: some Scene {
 
 
         WindowGroup {
-                TabView()
+            TabView()
                 .preferredColorScheme(isDarkMode ? .dark : .light)
                 .environmentObject(viewModel)
             
@@ -107,6 +151,7 @@ struct ClassTimerApp: App {
                     default: break
                     }
                 }
+
 
     }
 }

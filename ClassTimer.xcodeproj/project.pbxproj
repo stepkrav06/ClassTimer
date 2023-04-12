@@ -20,6 +20,8 @@
 		2754939129E400360052F42F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939029E400360052F42F /* SettingsView.swift */; };
 		2754939529E42C9B0052F42F /* ClassListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939429E42C9B0052F42F /* ClassListView.swift */; };
 		2754939729E42CF00052F42F /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939629E42CF00052F42F /* Class.swift */; };
+		276466DA29E71BC2003E759A /* ChooseNotificationTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276466D929E71BC2003E759A /* ChooseNotificationTimeView.swift */; };
+		276466DC29E73296003E759A /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276466DB29E73296003E759A /* SwiftUIView.swift */; };
 		2783761229E492CA00973219 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761129E492CA00973219 /* DayView.swift */; };
 		2783761629E4AFDB00973219 /* ClassAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761529E4AFDB00973219 /* ClassAddView.swift */; };
 		27EE8A7129E5E1030072FF31 /* EditClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EE8A7029E5E1030072FF31 /* EditClassView.swift */; };
@@ -59,10 +61,13 @@
 		2754939029E400360052F42F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2754939429E42C9B0052F42F /* ClassListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassListView.swift; sourceTree = "<group>"; };
 		2754939629E42CF00052F42F /* Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
+		276466D929E71BC2003E759A /* ChooseNotificationTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseNotificationTimeView.swift; sourceTree = "<group>"; };
+		276466DB29E73296003E759A /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		2783761129E492CA00973219 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		2783761529E4AFDB00973219 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
 		27EE8A7029E5E1030072FF31 /* EditClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClassView.swift; sourceTree = "<group>"; };
 		27EE8A7429E5F1390072FF31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		27F7B52529E6C5F20076D8D7 /* ClassTimer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClassTimer.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +98,7 @@
 		2754935429E3E42F0052F42F = {
 			isa = PBXGroup;
 			children = (
+				276466DB29E73296003E759A /* SwiftUIView.swift */,
 				2754935F29E3E42F0052F42F /* ClassTimer */,
 				2754937029E3E4320052F42F /* ClassTimerTests */,
 				2754937A29E3E4320052F42F /* ClassTimerUITests */,
@@ -113,7 +119,9 @@
 		2754935F29E3E42F0052F42F /* ClassTimer */ = {
 			isa = PBXGroup;
 			children = (
+				27F7B52529E6C5F20076D8D7 /* ClassTimer.entitlements */,
 				27EE8A7429E5F1390072FF31 /* Info.plist */,
+				276466D929E71BC2003E759A /* ChooseNotificationTimeView.swift */,
 				27EE8A7029E5E1030072FF31 /* EditClassView.swift */,
 				2754936029E3E42F0052F42F /* ClassTimerApp.swift */,
 				2783761129E492CA00973219 /* DayView.swift */,
@@ -286,8 +294,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				276466DC29E73296003E759A /* SwiftUIView.swift in Sources */,
 				2754938B29E3E4460052F42F /* TimerView.swift in Sources */,
 				2783761229E492CA00973219 /* DayView.swift in Sources */,
+				276466DA29E71BC2003E759A /* ChooseNotificationTimeView.swift in Sources */,
 				2754938F29E3F9E50052F42F /* TabView.swift in Sources */,
 				2754936329E3E42F0052F42F /* ContentView.swift in Sources */,
 				2754939729E42CF00052F42F /* Class.swift in Sources */,
@@ -452,6 +462,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ClassTimer/ClassTimer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ClassTimer/Preview Content\"";
@@ -459,11 +470,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ClassTimer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ScheduleMe;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -482,6 +496,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ClassTimer/ClassTimer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ClassTimer/Preview Content\"";
@@ -489,11 +504,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ClassTimer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ScheduleMe;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
