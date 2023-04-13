@@ -39,23 +39,24 @@ struct SwiftUIView: View {
 
 
                 .padding(32)
-            VStack{
-                Text("9:00")
-                    .foregroundColor(.white)
-                    .font(.system(size: 64))
-                    .bold()
-                    .fontDesign(.rounded)
-                    .frame(maxWidth: 150,alignment: .trailing)
-                Text("10:20")
-                    .foregroundColor(.white.opacity(0.6))
-                    .font(.system(size: 44))
-                    .bold()
-                    .fontDesign(.rounded)
-                    .frame(maxWidth: 150,alignment: .trailing)
-                    .offset(x:0,y:-10)
-            }
-            .frame(maxWidth: 150)
-            .offset(x:-10,y:8)
+//            VStack{
+//                Text("9:00")
+//                    .foregroundColor(.white)
+//                    .font(.system(size: 64))
+//                    .bold()
+//                    .fontDesign(.rounded)
+//                    .frame(maxWidth: 150,alignment: .trailing)
+//                Text("10:20")
+//                    .foregroundColor(.white.opacity(0.6))
+//                    .font(.system(size: 44))
+//                    .bold()
+//                    .fontDesign(.rounded)
+//                    .frame(maxWidth: 150,alignment: .trailing)
+//                    .offset(x:0,y:-10)
+//            }
+//            .frame(maxWidth: 150)
+//            .offset(x:-10,y:8)
+            
 
 
         }
