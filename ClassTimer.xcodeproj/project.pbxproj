@@ -24,6 +24,7 @@
 		276466DC29E73296003E759A /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276466DB29E73296003E759A /* SwiftUIView.swift */; };
 		2783761229E492CA00973219 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761129E492CA00973219 /* DayView.swift */; };
 		2783761629E4AFDB00973219 /* ClassAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761529E4AFDB00973219 /* ClassAddView.swift */; };
+		27A8E4D229E8052B00DA9679 /* ExamListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A8E4D129E8052B00DA9679 /* ExamListView.swift */; };
 		27EE8A7129E5E1030072FF31 /* EditClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EE8A7029E5E1030072FF31 /* EditClassView.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		276466DB29E73296003E759A /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		2783761129E492CA00973219 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		2783761529E4AFDB00973219 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
+		27A8E4D129E8052B00DA9679 /* ExamListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamListView.swift; sourceTree = "<group>"; };
 		27EE8A7029E5E1030072FF31 /* EditClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClassView.swift; sourceTree = "<group>"; };
 		27EE8A7429E5F1390072FF31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		27F7B52529E6C5F20076D8D7 /* ClassTimer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClassTimer.entitlements; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				276466D929E71BC2003E759A /* ChooseNotificationTimeView.swift */,
 				27EE8A7029E5E1030072FF31 /* EditClassView.swift */,
 				2754936029E3E42F0052F42F /* ClassTimerApp.swift */,
+				27A8E4D129E8052B00DA9679 /* ExamListView.swift */,
 				2783761129E492CA00973219 /* DayView.swift */,
 				2754936229E3E42F0052F42F /* ContentView.swift */,
 				2754938E29E3F9E50052F42F /* TabView.swift */,
@@ -303,6 +306,7 @@
 				2754939729E42CF00052F42F /* Class.swift in Sources */,
 				2754939529E42C9B0052F42F /* ClassListView.swift in Sources */,
 				2754939129E400360052F42F /* SettingsView.swift in Sources */,
+				27A8E4D229E8052B00DA9679 /* ExamListView.swift in Sources */,
 				27EE8A7129E5E1030072FF31 /* EditClassView.swift in Sources */,
 				2754936129E3E42F0052F42F /* ClassTimerApp.swift in Sources */,
 				2754938D29E3F8FB0052F42F /* Tab.swift in Sources */,
@@ -450,6 +454,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -470,7 +475,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ClassTimer/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ScheduleMe;
+				INFOPLIST_KEY_CFBundleDisplayName = MyTimeHasCome;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -504,7 +509,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ClassTimer/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ScheduleMe;
+				INFOPLIST_KEY_CFBundleDisplayName = MyTimeHasCome;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

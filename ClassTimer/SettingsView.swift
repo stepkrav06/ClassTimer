@@ -75,18 +75,19 @@ struct SettingsView: View {
                 .onChange(of: notificationStatus) { value in
                     viewModel.wantNotifications = value
                     viewModel.defaults.setValue(value, forKey: "wantNotifications")
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                        if success {
+                            print("All set!")
+                        } else if let error = error {
+                            print(error.localizedDescription)
+                        }
+                    }
                     if value {
                         let isRegisteredForRemoteNotifications = UIApplication.shared.isRegisteredForRemoteNotifications
                         if !isRegisteredForRemoteNotifications {
                             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
                         }
-                        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                            if success {
-                                print("All set!")
-                            } else if let error = error {
-                                print(error.localizedDescription)
-                            }
-                        }
+
                     }
                 }
             .fontWeight(.medium)

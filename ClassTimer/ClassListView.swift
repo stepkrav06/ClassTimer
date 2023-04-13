@@ -12,6 +12,7 @@ struct ClassListView: View {
     @State var pick = "Schedule"
     @State var selectedIndex: Int = 0
     @State var addingClass = false
+    @State var addingExam = false
     let dayLetters = ["M","Tu","W","Th","F","Sa","Su"]
     @State var editClassSheet = false
     @State var classToEditOrDelete: Class? = nil
@@ -144,6 +145,85 @@ struct ClassListView: View {
 
                     .listStyle(.plain)
                     
+
+                }
+
+            }
+            if pick == "Exams"{
+                VStack(spacing: 5){
+                    HStack{
+                        Text("Exams")
+                            .fontWeight(.thin)
+                            .italic()
+                            .frame(maxWidth: .infinity, alignment: .topLeading)
+                            .padding(.top)
+                            .padding(.horizontal)
+                        Button {
+                            addingExam.toggle()
+
+                        } label: {
+                            ZStack{
+                                Image(systemName: "plus")
+                                    .foregroundColor(Color.gray)
+                                    .font(.system(size: 20))
+                            }
+                            }
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .frame(height: 30)
+                        .padding(.top)
+                        .padding(.horizontal)
+                        .sheet(isPresented: $addingExam){
+                            ClassAddView()
+                        }
+                    }
+                    RoundedRectangle(cornerRadius: 50, style: .continuous)
+                        .frame(height: 2)
+                        .padding(.horizontal)
+
+                    List{
+                        ForEach(viewModel.classes){ cl in
+                            HStack{
+
+                                Text(cl.name)
+                                    .fontWeight(.medium)
+                                    .frame(alignment: .leading)
+
+
+                                    Text(cl.description)
+                                        .fontWeight(.thin)
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+
+                                        .padding(.leading, 4)
+
+
+
+                                Spacer()
+
+
+                            }
+                            .swipeActions(allowsFullSwipe: false) {
+                                                        Button {
+                                                            editClassSheet.toggle()
+                                                        } label: {
+                                                            Label("Edit", systemImage: "pencil")
+                                                        }
+                                                        .tint(.indigo)
+
+                                                        Button(role: .destructive) {
+                                                            classToEditOrDelete = cl
+                                                            deleteClassAlert.toggle()
+                                                        } label: {
+                                                            Label("Delete", systemImage: "trash.fill")
+                                                        }
+                                                    }
+                            .sheet(isPresented: $editClassSheet){
+                                EditClassView(classToEdit: cl)
+                            }
+                        }
+                    }
+
+                    .listStyle(.plain)
+
 
                 }
 

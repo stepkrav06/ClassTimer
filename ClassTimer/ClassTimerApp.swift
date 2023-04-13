@@ -13,6 +13,7 @@ import UserNotifications
 struct ClassTimerApp: App {
     @Environment(\.scenePhase) private var phase
     @AppStorage("isDarkMode") private var isDarkMode = false
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     let viewModel = AppViewModel()
     init(){
         viewModel.pickedColor = viewModel.defaults.colorForKey(key: "AccentColor")
@@ -153,5 +154,39 @@ struct ClassTimerApp: App {
 
 
     }
+}
+class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    let gcmMessageIDKey = "gcm.message_id"
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // Firebase and push messaging configuration
+
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNs)
+            UNUserNotificationCenter.current().delegate = self
+
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: { _, _ in }
+            )
+        } else {
+            let settings: UIUserNotificationSettings =
+            UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
+
+        application.registerForRemoteNotifications()
+        return true
+    }
+
+    // function for handling notifications
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+
+    }
+    // function for handling notifications
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+
+    }
+
 }
 
