@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2754936129E3E42F0052F42F /* ClassTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754936029E3E42F0052F42F /* ClassTimerApp.swift */; };
-		2754936329E3E42F0052F42F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754936229E3E42F0052F42F /* ContentView.swift */; };
 		2754936529E3E4320052F42F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2754936429E3E4320052F42F /* Assets.xcassets */; };
 		2754936829E3E4320052F42F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2754936729E3E4320052F42F /* Preview Assets.xcassets */; };
 		2754937229E3E4320052F42F /* ClassTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754937129E3E4320052F42F /* ClassTimerTests.swift */; };
@@ -16,11 +15,10 @@
 		2754937E29E3E4320052F42F /* ClassTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754937D29E3E4320052F42F /* ClassTimerUITestsLaunchTests.swift */; };
 		2754938B29E3E4460052F42F /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754938A29E3E4460052F42F /* TimerView.swift */; };
 		2754938D29E3F8FB0052F42F /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754938C29E3F8FB0052F42F /* Tab.swift */; };
-		2754938F29E3F9E50052F42F /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754938E29E3F9E50052F42F /* TabView.swift */; };
+		2754938F29E3F9E50052F42F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754938E29E3F9E50052F42F /* ContentView.swift */; };
 		2754939129E400360052F42F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939029E400360052F42F /* SettingsView.swift */; };
 		2754939529E42C9B0052F42F /* ClassListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939429E42C9B0052F42F /* ClassListView.swift */; };
 		2754939729E42CF00052F42F /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939629E42CF00052F42F /* Class.swift */; };
-		276466DA29E71BC2003E759A /* ChooseNotificationTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276466D929E71BC2003E759A /* ChooseNotificationTimeView.swift */; };
 		276466DC29E73296003E759A /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276466DB29E73296003E759A /* SwiftUIView.swift */; };
 		2783761229E492CA00973219 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761129E492CA00973219 /* DayView.swift */; };
 		2783761629E4AFDB00973219 /* ClassAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761529E4AFDB00973219 /* ClassAddView.swift */; };
@@ -48,7 +46,6 @@
 /* Begin PBXFileReference section */
 		2754935D29E3E42F0052F42F /* ClassTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2754936029E3E42F0052F42F /* ClassTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTimerApp.swift; sourceTree = "<group>"; };
-		2754936229E3E42F0052F42F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2754936429E3E4320052F42F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2754936729E3E4320052F42F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2754936D29E3E4320052F42F /* ClassTimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClassTimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,11 +55,10 @@
 		2754937D29E3E4320052F42F /* ClassTimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2754938A29E3E4460052F42F /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		2754938C29E3F8FB0052F42F /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
-		2754938E29E3F9E50052F42F /* TabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
+		2754938E29E3F9E50052F42F /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2754939029E400360052F42F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2754939429E42C9B0052F42F /* ClassListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassListView.swift; sourceTree = "<group>"; };
 		2754939629E42CF00052F42F /* Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
-		276466D929E71BC2003E759A /* ChooseNotificationTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseNotificationTimeView.swift; sourceTree = "<group>"; };
 		276466DB29E73296003E759A /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		2783761129E492CA00973219 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		2783761529E4AFDB00973219 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
@@ -123,13 +119,11 @@
 			children = (
 				27F7B52529E6C5F20076D8D7 /* ClassTimer.entitlements */,
 				27EE8A7429E5F1390072FF31 /* Info.plist */,
-				276466D929E71BC2003E759A /* ChooseNotificationTimeView.swift */,
 				27EE8A7029E5E1030072FF31 /* EditClassView.swift */,
 				2754936029E3E42F0052F42F /* ClassTimerApp.swift */,
 				27A8E4D129E8052B00DA9679 /* ExamListView.swift */,
 				2783761129E492CA00973219 /* DayView.swift */,
-				2754936229E3E42F0052F42F /* ContentView.swift */,
-				2754938E29E3F9E50052F42F /* TabView.swift */,
+				2754938E29E3F9E50052F42F /* ContentView.swift */,
 				2754939029E400360052F42F /* SettingsView.swift */,
 				2754938A29E3E4460052F42F /* TimerView.swift */,
 				2754938C29E3F8FB0052F42F /* Tab.swift */,
@@ -300,9 +294,7 @@
 				276466DC29E73296003E759A /* SwiftUIView.swift in Sources */,
 				2754938B29E3E4460052F42F /* TimerView.swift in Sources */,
 				2783761229E492CA00973219 /* DayView.swift in Sources */,
-				276466DA29E71BC2003E759A /* ChooseNotificationTimeView.swift in Sources */,
-				2754938F29E3F9E50052F42F /* TabView.swift in Sources */,
-				2754936329E3E42F0052F42F /* ContentView.swift in Sources */,
+				2754938F29E3F9E50052F42F /* ContentView.swift in Sources */,
 				2754939729E42CF00052F42F /* Class.swift in Sources */,
 				2754939529E42C9B0052F42F /* ClassListView.swift in Sources */,
 				2754939129E400360052F42F /* SettingsView.swift in Sources */,

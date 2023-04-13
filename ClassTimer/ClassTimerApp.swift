@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BackgroundTasks
+
 import UserNotifications
 
 @main
@@ -140,7 +140,7 @@ struct ClassTimerApp: App {
 
 
         WindowGroup {
-            TabView()
+            ContentView()
                 .preferredColorScheme(isDarkMode ? .dark : .light)
                 .environmentObject(viewModel)
             

@@ -24,6 +24,8 @@ struct ClassListView: View {
                     .tag("Schedule")
                 Text("Classes")
                     .tag("Classes")
+                Text("Exams")
+                    .tag("Exams")
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
@@ -110,15 +112,25 @@ struct ClassListView: View {
                                     .frame(alignment: .leading)
 
 
+
+
+
+                                HStack{
                                     Text(cl.description)
                                         .fontWeight(.thin)
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        
+                                    RoundedRectangle(cornerRadius: 50, style: .continuous)
+                                        .foregroundColor(Color(UIColor(red: cl.colorR, green: cl.colorG, blue: cl.colorB, alpha: cl.colorA)))
+                                        .frame(width: 2)
+                                        .padding(.trailing)
 
-                                        .padding(.leading, 4)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .trailing)
 
 
 
-                                Spacer()
+
+
 
 
                             }
@@ -187,6 +199,7 @@ struct ClassListView: View {
                                 Text(cl.name)
                                     .fontWeight(.medium)
                                     .frame(alignment: .leading)
+
 
 
                                     Text(cl.description)

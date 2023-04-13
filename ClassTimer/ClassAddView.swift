@@ -16,184 +16,208 @@ struct ClassAddView: View {
     @State var dateTimes: [String:[String]] = [:]
     @State var chosenStartTime: Date = Date()
     @State var chosenEndTime: Date = Date()
-    @State private var customColor = Color(.sRGB, red: 0, green: 0, blue: 0)
+    @State private var chosenColor = Color(.sRGB, red: 0, green: 0, blue: 0)
     // Alerts
     @State private var emptyFieldsAlert = false
     @State private var incorrectTimesAlert = false
     @State private var createClassAlert = false
     var body: some View {
         VStack{
-            Group{
-                Text("Name")
-                    .fontWeight(.thin)
-                    .italic()
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                    .padding(.top)
-                    .padding(.horizontal)
-                RoundedRectangle(cornerRadius: 50, style: .continuous)
-                    .frame(height: 2)
-                    .padding(.horizontal)
-                TextField("", text: $name)
-                    .textFieldStyle(OvalTextFieldStyle())
-                    .padding()
-                
-                Text("Days")
-                    .fontWeight(.thin)
-                    .italic()
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                    .padding(.top)
-                    .padding(.horizontal)
-                RoundedRectangle(cornerRadius: 50, style: .continuous)
-                    .frame(height: 2)
-                    .padding(.horizontal)
-            }
-            HStack(spacing:20){
-                ForEach(days, id: \.self){ day in
-                    ZStack{
-
-                        Circle()
-                            .frame(width: 36)
-                            .foregroundColor(daysPicked.contains(day) || pickedDay == day ? viewModel.pickedColor.opacity(0.4) :.clear)
-                            .overlay{
-                                Text(day)
-                                    .font(.system(size: 12))
-                                    .onTapGesture {
-                                        pickedDay = day
-                                    }
-                            }
-
-
-
-                    }
-
-                }
-            }
-            .frame(maxWidth: .infinity)
-            .padding()
-
-            Group{
-                Text("Time" + " (\(pickedDay))")
-                    .fontWeight(.thin)
-                    .italic()
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                    .padding(.top)
-                    .padding(.horizontal)
-                RoundedRectangle(cornerRadius: 50, style: .continuous)
-                    .frame(height: 2)
-                    .padding(.horizontal)
-            }
-            Group{
-                if pickedDay != ""{
-                    HStack{
-                        HStack{
-
-                            DatePicker("", selection: $chosenStartTime, displayedComponents: .hourAndMinute)
-                                .labelsHidden()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading)
-
-                            Text("-")
-                            DatePicker("", selection: $chosenEndTime, displayedComponents: .hourAndMinute)
-                                .labelsHidden()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.trailing)
-                        }
-
-                        Button {
-                            guard chosenStartTime != chosenEndTime, chosenEndTime>chosenStartTime else {
-                                incorrectTimesAlert.toggle()
-                                return
-                            }
-                            if !daysPicked.contains(pickedDay){
-                                daysPicked.append(pickedDay)
-                            }
-                            let formatter = DateFormatter()
-                            formatter.dateFormat = "HH:mm"
-                            let startString = formatter.string(from: chosenStartTime)
-                            let endString = formatter.string(from: chosenEndTime)
-                            let timeStr = startString + " - " + endString
-                            var times = dateTimes[pickedDay] ?? []
-                            if !times.contains(timeStr){
-                                times.append(timeStr)
-                            }
-                            times = times.sorted(by: {
-                                let formatter1 = DateFormatter()
-                                formatter1.dateFormat = "HH:mm"
-                                return formatter1.date(from: $0.components(separatedBy: " - ")[0])! < formatter1.date(from: $1.components(separatedBy: " - ")[0])!
-                            })
-                            dateTimes[pickedDay] = times
-
-
-
-                        } label: {
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 30)
-                                    .stroke(Color.gray, lineWidth: 1)
-                                Text("Add time")
-                                    .foregroundColor(Color.gray)
-                                    .font(.system(size: 18))
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 30)
+            ScrollView{
+                Group{
+                    Text("Name")
+                        .fontWeight(.thin)
+                        .italic()
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    RoundedRectangle(cornerRadius: 50, style: .continuous)
+                        .frame(height: 2)
+                        .padding(.horizontal)
+                    TextField("", text: $name)
+                        .textFieldStyle(OvalTextFieldStyle())
                         .padding()
+                    Text("Color")
+                        .fontWeight(.thin)
+                        .italic()
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    RoundedRectangle(cornerRadius: 50, style: .continuous)
+                        .frame(height: 2)
+                        .padding(.horizontal)
+                    HStack{
+                        ColorPicker("", selection: $chosenColor)
+                            .frame(maxWidth: .infinity,alignment: .leading)
+                            .labelsHidden()
+                        
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .foregroundColor(chosenColor)
+                            .frame(maxHeight: 30)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+
+                    Text("Days")
+                        .fontWeight(.thin)
+                        .italic()
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    RoundedRectangle(cornerRadius: 50, style: .continuous)
+                        .frame(height: 2)
+                        .padding(.horizontal)
+                }
+                HStack(spacing:20){
+                    ForEach(days, id: \.self){ day in
+                        ZStack{
+
+                            Circle()
+                                .frame(width: 36)
+                                .foregroundColor(daysPicked.contains(day) || pickedDay == day ? viewModel.pickedColor.opacity(0.4) :.clear)
+                                .overlay{
+                                    Text(day)
+                                        .font(.system(size: 12))
+                                        .onTapGesture {
+                                            pickedDay = day
+                                        }
+                                }
+
+
+
+                        }
+
                     }
                 }
-            }
-            Group{
-                Text("Times added")
-                    .fontWeight(.thin)
-                    .italic()
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                    .padding(.top)
-                    .padding(.horizontal)
-                RoundedRectangle(cornerRadius: 50, style: .continuous)
-                    .frame(height: 2)
-                    .padding(.horizontal)
-            }
-            List{
-                ForEach(daysPicked, id:\.self){ day in
-                    ForEach(dateTimes[day] ?? [], id:\.self){
-                        time in
+                .frame(maxWidth: .infinity)
+                .padding()
+
+                Group{
+                    Text("Time" + " (\(pickedDay))")
+                        .fontWeight(.thin)
+                        .italic()
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    RoundedRectangle(cornerRadius: 50, style: .continuous)
+                        .frame(height: 2)
+                        .padding(.horizontal)
+                }
+                Group{
+                    if pickedDay != ""{
                         HStack{
-                            Text(day)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            Text(time)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                        }.swipeActions(allowsFullSwipe: false) {
-                            Button(role: .destructive) {
-                                let ind = dateTimes[day]!.firstIndex(of: time)!
-                                dateTimes[day]!.remove(at: ind)
-                                if dateTimes[day] == [] {
-                                    dateTimes[day] = nil
-                                    let dayInd = daysPicked.firstIndex(of: day)!
-                                    daysPicked.remove(at: dayInd)
+                            HStack{
+
+                                DatePicker("", selection: $chosenStartTime, displayedComponents: .hourAndMinute)
+                                    .labelsHidden()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading)
+
+                                Text("-")
+                                DatePicker("", selection: $chosenEndTime, displayedComponents: .hourAndMinute)
+                                    .labelsHidden()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.trailing)
+                            }
+
+                            Button {
+                                guard chosenStartTime != chosenEndTime, chosenEndTime>chosenStartTime else {
+                                    incorrectTimesAlert.toggle()
+                                    return
                                 }
+                                if !daysPicked.contains(pickedDay){
+                                    daysPicked.append(pickedDay)
+                                }
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "HH:mm"
+                                let startString = formatter.string(from: chosenStartTime)
+                                let endString = formatter.string(from: chosenEndTime)
+                                let timeStr = startString + " - " + endString
+                                var times = dateTimes[pickedDay] ?? []
+                                if !times.contains(timeStr){
+                                    times.append(timeStr)
+                                }
+                                times = times.sorted(by: {
+                                    let formatter1 = DateFormatter()
+                                    formatter1.dateFormat = "HH:mm"
+                                    return formatter1.date(from: $0.components(separatedBy: " - ")[0])! < formatter1.date(from: $1.components(separatedBy: " - ")[0])!
+                                })
+                                dateTimes[pickedDay] = times
+
+
+
                             } label: {
-                                Label("Delete", systemImage: "trash.fill")
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 30)
+                                        .stroke(Color.gray, lineWidth: 1)
+                                    Text("Add time")
+                                        .foregroundColor(Color.gray)
+                                        .font(.system(size: 18))
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 30)
+                            .padding()
+                        }
+                    }
+                }
+                Group{
+                    Text("Times added")
+                        .fontWeight(.thin)
+                        .italic()
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    RoundedRectangle(cornerRadius: 50, style: .continuous)
+                        .frame(height: 2)
+                        .padding(.horizontal)
+                }
+                List{
+                    ForEach(daysPicked, id:\.self){ day in
+                        ForEach(dateTimes[day] ?? [], id:\.self){
+                            time in
+                            HStack{
+                                Text(day)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Text(time)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                            }.swipeActions(allowsFullSwipe: false) {
+                                Button(role: .destructive) {
+                                    let ind = dateTimes[day]!.firstIndex(of: time)!
+                                    dateTimes[day]!.remove(at: ind)
+                                    if dateTimes[day] == [] {
+                                        dateTimes[day] = nil
+                                        let dayInd = daysPicked.firstIndex(of: day)!
+                                        daysPicked.remove(at: dayInd)
+                                    }
+                                } label: {
+                                    Label("Delete", systemImage: "trash.fill")
+                                }
                             }
                         }
                     }
                 }
-            }
-            Button {
-                guard name != "", dateTimes != [:] else {
-                    emptyFieldsAlert.toggle()
-                    return
+                .frame(minHeight: 200)
+
+                Button {
+                    guard name != "", dateTimes != [:], chosenColor != Color(.sRGB, red: 0, green: 0, blue: 0) else {
+                        emptyFieldsAlert.toggle()
+                        return
+                    }
+                    createClassAlert.toggle()
+                } label: {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 30)
+                            .stroke(Color.gray, lineWidth: 1)
+                        Text("Create class")
+                            .foregroundColor(Color.gray)
+                            .font(.system(size: 18))
+                    }
                 }
-                createClassAlert.toggle()
-            } label: {
-                ZStack{
-                    RoundedRectangle(cornerRadius: 30)
-                        .stroke(Color.gray, lineWidth: 1)
-                    Text("Create class")
-                        .foregroundColor(Color.gray)
-                        .font(.system(size: 18))
-                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 30)
+                .padding()
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: 30)
-            .padding()
         }
         .alert("Some fields are empty or no times were added. Cannot proceed.", isPresented: $emptyFieldsAlert) {
                     Button("OK", role: .cancel) { }
@@ -222,9 +246,16 @@ struct ClassAddView: View {
 
                 }
                 classDescription.removeLast()
+                let uiColor = UIColor(chosenColor).cgColor.components!
 
 
-                let class1 = Class(name: name, daysTimes: dateTimes, description: classDescription)
+                  let red = uiColor[0]
+                  let green = uiColor[1]
+                  let blue = uiColor[2]
+                  let alpha = uiColor[3]
+
+
+                let class1 = Class(name: name, daysTimes: dateTimes, description: classDescription, colorR: red, colorG: green, colorB: blue, colorA: alpha)
                 var classes = viewModel.classes
                 classes.append(class1)
                 viewModel.classes = classes
@@ -236,7 +267,7 @@ struct ClassAddView: View {
                         let strAr = time.components(separatedBy: " - ")
                         let startTime = strAr[0]
                         let endTime = strAr[1]
-                        let lesson = Lesson(name: name, timeStart: startTime, timeEnd: endTime)
+                        let lesson = Lesson(name: name, timeStart: startTime, timeEnd: endTime, colorR: red, colorG: green, colorB: blue, colorA: alpha)
                         lessonsDay.append(lesson)
                     }
                     viewModel.schedule.schedule[dayToDayNumber[day]!]!.append(contentsOf: lessonsDay)

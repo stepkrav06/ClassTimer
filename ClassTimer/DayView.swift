@@ -33,8 +33,8 @@ struct DayView: View {
                         }
                         .frame(minWidth:40)
                         RoundedRectangle(cornerRadius: 50, style: .continuous)
-                            .foregroundColor(viewModel.pickedColor)
-                            .frame(width: 1)
+                            .foregroundColor(Color(UIColor(red: lesson.colorR, green: lesson.colorG, blue: lesson.colorB, alpha: lesson.colorA)))
+                            .frame(width: 2)
                             .padding(.trailing)
                         Text(lesson.name)
                             .fontWeight(.medium)
