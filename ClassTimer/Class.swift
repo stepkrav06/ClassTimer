@@ -14,7 +14,11 @@ struct Class: Identifiable, Equatable, Codable, Hashable {
     var name: String
     var daysTimes: [String:[String]]
     var description: String
-    
+//    var colorR: Double
+//    var colorG: Double
+//    var colorB: Double
+//    var colorA: Double
+//    
 
     
 }

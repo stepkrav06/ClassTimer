@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TabView: View {
     @EnvironmentObject var viewModel: AppViewModel
-    @State var selectedTab: Tab = .timer
+    @State var selectedTab: Tab = .classes
     @State var color: Color = .blue
     var body: some View {
         NavigationView {

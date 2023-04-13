@@ -33,8 +33,11 @@ struct TimerView: View {
         print(todayWeekday)
 
         while nextTime == ""{
+            print(nextWeekday)
+            print(nextTime)
+
             if viewModel.schedule.schedule == [1:[],2:[],3:[],4:[],5:[],6:[],7:[]]{
-break
+                break
             }
 
 
@@ -58,9 +61,10 @@ break
 
             }
             if nextTime == ""{
-                nextWeekday = (todayWeekday+1) % 7
+                nextWeekday = (nextWeekday) % 7 + 1
             }
         }
+
 
 
         
@@ -186,6 +190,9 @@ break
                 UserDefaults.standard.removeObject(forKey: "Classes")
                 viewModel.classes = []
                 viewModel.schedule = Schedule(schedule: [1:[],2:[],3:[],4:[],5:[],6:[],7:[]])
+                viewModel.countdownStartTime = Date()
+                viewModel.countdownStartClassTime = Date()
+                viewModel.countdownTimeLength = 0
                 UserDefaults.standard.removeObject(forKey: "Schedule")
                 UserDefaults.standard.removeObject(forKey: "countdownStartTime")
                 UserDefaults.standard.removeObject(forKey: "countdownStartClassTime")

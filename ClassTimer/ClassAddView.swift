@@ -16,6 +16,7 @@ struct ClassAddView: View {
     @State var dateTimes: [String:[String]] = [:]
     @State var chosenStartTime: Date = Date()
     @State var chosenEndTime: Date = Date()
+    @State private var customColor = Color(.sRGB, red: 0, green: 0, blue: 0)
     // Alerts
     @State private var emptyFieldsAlert = false
     @State private var incorrectTimesAlert = false
