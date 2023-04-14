@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		272BB19929E9275800B49322 /* ExamAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272BB19829E9275800B49322 /* ExamAddView.swift */; };
 		2754936129E3E42F0052F42F /* ClassTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754936029E3E42F0052F42F /* ClassTimerApp.swift */; };
 		2754936529E3E4320052F42F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2754936429E3E4320052F42F /* Assets.xcassets */; };
 		2754936829E3E4320052F42F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2754936729E3E4320052F42F /* Preview Assets.xcassets */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		272BB19829E9275800B49322 /* ExamAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamAddView.swift; sourceTree = "<group>"; };
 		2754935D29E3E42F0052F42F /* ClassTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2754936029E3E42F0052F42F /* ClassTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTimerApp.swift; sourceTree = "<group>"; };
 		2754936429E3E4320052F42F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				2754938C29E3F8FB0052F42F /* Tab.swift */,
 				2754939429E42C9B0052F42F /* ClassListView.swift */,
 				2783761529E4AFDB00973219 /* ClassAddView.swift */,
+				272BB19829E9275800B49322 /* ExamAddView.swift */,
 				2754939629E42CF00052F42F /* Class.swift */,
 				2754936429E3E4320052F42F /* Assets.xcassets */,
 				2754936629E3E4320052F42F /* Preview Content */,
@@ -300,6 +303,7 @@
 				2754939129E400360052F42F /* SettingsView.swift in Sources */,
 				27A8E4D229E8052B00DA9679 /* ExamListView.swift in Sources */,
 				27EE8A7129E5E1030072FF31 /* EditClassView.swift in Sources */,
+				272BB19929E9275800B49322 /* ExamAddView.swift in Sources */,
 				2754936129E3E42F0052F42F /* ClassTimerApp.swift in Sources */,
 				2754938D29E3F8FB0052F42F /* Tab.swift in Sources */,
 				2783761629E4AFDB00973219 /* ClassAddView.swift in Sources */,

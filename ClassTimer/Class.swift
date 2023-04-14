@@ -42,7 +42,8 @@ struct Exam: Identifiable, Equatable, Codable, Hashable {
     public var id = UUID()
     var name: String
     var cl: Class
-    var time: String
+    var date: Date
+    var dateString: String
 }
 
 

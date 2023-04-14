@@ -194,6 +194,7 @@ struct TimerView: View {
                 viewModel.countdownStartClassTime = Date()
                 viewModel.countdownTimeLength = 0
                 UserDefaults.standard.removeObject(forKey: "Schedule")
+                UserDefaults.standard.removeObject(forKey: "Exams")
                 UserDefaults.standard.removeObject(forKey: "countdownStartTime")
                 UserDefaults.standard.removeObject(forKey: "countdownStartClassTime")
                 UserDefaults.standard.removeObject(forKey: "countdownTimeLength")

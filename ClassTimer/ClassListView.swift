@@ -14,9 +14,13 @@ struct ClassListView: View {
     @State var addingClass = false
     @State var addingExam = false
     let dayLetters = ["M","Tu","W","Th","F","Sa","Su"]
+    var formatter1 = DateFormatter()
     @State var editClassSheet = false
+    @State var editExamSheet = false
     @State var classToEditOrDelete: Class? = nil
+    @State var examToEditOrDelete: Exam? = nil
     @State var deleteClassAlert = false
+    @State var deleteExamAlert = false
     var body: some View {
         VStack{
             Picker("", selection: $pick) {
@@ -162,7 +166,7 @@ struct ClassListView: View {
 
             }
             if pick == "Exams"{
-                VStack(spacing: 5){
+
                     HStack{
                         Text("Exams")
                             .fontWeight(.thin)
@@ -185,7 +189,7 @@ struct ClassListView: View {
                         .padding(.top)
                         .padding(.horizontal)
                         .sheet(isPresented: $addingExam){
-                            ClassAddView()
+                            ExamAddView()
                         }
                     }
                     RoundedRectangle(cornerRadius: 50, style: .continuous)
@@ -193,16 +197,32 @@ struct ClassListView: View {
                         .padding(.horizontal)
 
                     List{
-                        ForEach(viewModel.classes){ cl in
+                        ForEach(viewModel.exams.sorted(by: {
+                            let date1 = $0.date
+                            let date2 = $1.date
+                            return date1 < date2
+                        })){ exam in
                             HStack{
+                                VStack{
+                                    Text(exam.dateString)
+                                        .fontWeight(.medium)
 
-                                Text(cl.name)
+                                        .padding(.leading, 4)
+
+                                }
+                                .frame(minWidth:60)
+                                RoundedRectangle(cornerRadius: 50, style: .continuous)
+                                    .foregroundColor(Color(UIColor(red: exam.cl.colorR, green: exam.cl.colorG, blue: exam.cl.colorB, alpha: exam.cl.colorA)))
+                                    .frame(width: 2)
+                                    .padding(.trailing)
+
+                                Text(exam.name)
                                     .fontWeight(.medium)
                                     .frame(alignment: .leading)
 
 
 
-                                    Text(cl.description)
+                                Text(exam.cl.name)
                                         .fontWeight(.thin)
                                         .frame(maxWidth: .infinity, alignment: .trailing)
 
@@ -216,21 +236,21 @@ struct ClassListView: View {
                             }
                             .swipeActions(allowsFullSwipe: false) {
                                                         Button {
-                                                            editClassSheet.toggle()
+                                                            editExamSheet.toggle()
                                                         } label: {
                                                             Label("Edit", systemImage: "pencil")
                                                         }
                                                         .tint(.indigo)
 
                                                         Button(role: .destructive) {
-                                                            classToEditOrDelete = cl
-                                                            deleteClassAlert.toggle()
+                                                            examToEditOrDelete = exam
+                                                            deleteExamAlert.toggle()
                                                         } label: {
                                                             Label("Delete", systemImage: "trash.fill")
                                                         }
                                                     }
-                            .sheet(isPresented: $editClassSheet){
-                                EditClassView(classToEdit: cl)
+                            .sheet(isPresented: $editExamSheet){
+                                //EditClassView(classToEdit: exam)
                             }
                         }
                     }
@@ -238,7 +258,7 @@ struct ClassListView: View {
                     .listStyle(.plain)
 
 
-                }
+
 
             }
 
@@ -254,6 +274,11 @@ struct ClassListView: View {
             formatter.locale = Locale(identifier: "en_US")
             let todayDay = formatter.string(from: today)
             selectedIndex = dayToDayNumber[todayDay]!-1
+
+            UserDefaults.standard.removeObject(forKey: "Exam")
+            for exam in viewModel.exams {
+                print(exam.name)
+            }
         }
         .alert("Are you sure you want to delete this class?", isPresented: $deleteClassAlert) {
             Button("Cancel", role: .cancel) { }
@@ -261,6 +286,7 @@ struct ClassListView: View {
                 viewModel.removeClass(cl: classToEditOrDelete!)
             }
                 }
+
         .frame(maxHeight: .infinity, alignment: .top)
         .navigationTitle("Classes")
     }

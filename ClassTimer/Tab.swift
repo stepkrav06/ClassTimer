@@ -8,6 +8,7 @@ class AppViewModel: ObservableObject {
     @Published var schedule: Schedule = Schedule(schedule: [1:[],2:[],3:[],4:[],5:[],6:[],7:[]])
     @Published var classes: [Class] = []
     @Published var lessons: [Lesson] = []
+    @Published var exams: [Exam] = []
     @Published var firstNotificationTime: TimeInterval = 0
     @Published var secondNotificationTime: TimeInterval = 0
     @Published var wantNotifications = false
@@ -52,6 +53,19 @@ class AppViewModel: ObservableObject {
 
         } catch {
             print("Unable to Encode Classes (\(error))")
+        }
+    }
+    func encodeExams(objects: [Exam]){
+        do {
+            // Create JSON Encoder
+            let encoder = JSONEncoder()
+
+            // Encode Note
+            let data = try encoder.encode(objects)
+            UserDefaults.standard.set(data, forKey: "Exams")
+
+        } catch {
+            print("Unable to Encode Exams (\(error))")
         }
     }
     
