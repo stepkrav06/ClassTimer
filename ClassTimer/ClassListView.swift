@@ -250,7 +250,7 @@ struct ClassListView: View {
                                                         }
                                                     }
                             .sheet(isPresented: $editExamSheet){
-                                //EditClassView(classToEdit: exam)
+                                ExamEditView(examToEdit: exam)
                             }
                         }
                     }
@@ -284,6 +284,12 @@ struct ClassListView: View {
             Button("Cancel", role: .cancel) { }
             Button("Delete", role: .destructive) {
                 viewModel.removeClass(cl: classToEditOrDelete!)
+            }
+                }
+        .alert("Are you sure you want to delete this exam?", isPresented: $deleteExamAlert) {
+            Button("Cancel", role: .cancel) { }
+            Button("Delete", role: .destructive) {
+                viewModel.removeExam(exam: examToEditOrDelete!)
             }
                 }
 

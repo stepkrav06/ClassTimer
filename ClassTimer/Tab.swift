@@ -97,6 +97,12 @@ class AppViewModel: ObservableObject {
         encodeClasses(objects: classes)
         encodeSchedule(object: schedule)
     }
+    func removeExam(exam: Exam){
+        let indExam = exams.firstIndex(of: exam)!
+        exams.remove(at: indExam)
+
+        encodeExams(objects: exams)
+    }
 }
 
 struct TabItem: Identifiable{

@@ -1,5 +1,5 @@
 //
-//  ExamAddView.swift
+//  ExamEditView.swift
 //  ClassTimer
 //
 //  Created by Степан Кравцов on 14.04.2023.
@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-struct ExamAddView: View {
+struct ExamEditView: View {
     @EnvironmentObject var viewModel: AppViewModel
     @Environment(\.dismiss) var dismiss
     @State var name: String = ""
     @State var pickedDate: Date = Date()
     @State var chosenClass: Class = Class(name: "", daysTimes: [:], description: "", colorR: 0, colorG: 0, colorB: 0, colorA: 0)
+    var examToEdit: Exam
 
 
 
@@ -35,7 +36,7 @@ struct ExamAddView: View {
                     TextField("", text: $name)
                         .textFieldStyle(OvalTextFieldStyle())
                         .padding()
-                    
+
                     Text("Date")
                         .fontWeight(.thin)
                         .italic()
@@ -50,10 +51,10 @@ struct ExamAddView: View {
                     .labelsHidden()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading)
-                
-                
-                
-                
+
+
+
+
                 Group{
                     Text("Class")
                         .fontWeight(.thin)
@@ -65,40 +66,40 @@ struct ExamAddView: View {
                         .frame(height: 2)
                         .padding(.horizontal)
                 }
-                
+
                 ForEach(viewModel.classes, id:\.self){ cl in
                     HStack{
                         Image(systemName: chosenClass.name == cl.name ? "checkmark.circle.fill" : "circle")
                             .foregroundColor(chosenClass.name == cl.name ? viewModel.pickedColor : .black)
                             .frame(maxWidth: 30)
 
-                        
+
                         Text(cl.name)
                             .fontWeight(.medium)
                             .frame(alignment: .leading)
-                        
+
                         HStack{
                             Text(cl.description)
                                 .fontWeight(.thin)
-                            
+
                             RoundedRectangle(cornerRadius: 50, style: .continuous)
                                 .foregroundColor(Color(UIColor(red: cl.colorR, green: cl.colorG, blue: cl.colorB, alpha: cl.colorA)))
                                 .frame(width: 2)
                                 .padding(.trailing)
-                            
+
                         }
                         .frame(maxWidth: .infinity, alignment: .trailing)
 
                     }
-                    
+
                     .frame(minHeight: 40)
                     .padding(.horizontal)
                     .onTapGesture {
                         chosenClass = cl
                     }
-                    
 
-                    
+
+
 
                 }
                 Button {
@@ -120,6 +121,12 @@ struct ExamAddView: View {
                 .frame(height: 30)
                 .padding()
             }
+        }
+        .onAppear{
+            name = examToEdit.name
+            pickedDate = examToEdit.date
+            chosenClass = examToEdit.cl
+
         }
         .alert("Some fields are empty or no class was chosen. Cannot proceed.", isPresented: $emptyFieldsAlert) {
                     Button("OK", role: .cancel) { }
@@ -144,8 +151,8 @@ struct ExamAddView: View {
     }
 }
 
-struct ExamAddView_Previews: PreviewProvider {
+struct ExamEditView_Previews: PreviewProvider {
     static var previews: some View {
-        ExamAddView()
+        ExamEditView(examToEdit: Exam(name: "", cl: Class(name: "", daysTimes: [:], description: "", colorR: 0, colorG: 0, colorB: 0, colorA: 0), date: Date(), dateString: ""))
     }
 }
