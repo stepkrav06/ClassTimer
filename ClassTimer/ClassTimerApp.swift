@@ -24,6 +24,9 @@ struct ClassTimerApp: App {
         viewModel.countdownStartTime = viewModel.defaults.value(forKey: "countdownStartTime") as? Date ?? Date()
         viewModel.countdownStartClassTime = viewModel.defaults.value(forKey: "countdownStartClassTime") as? Date ?? Date()
         viewModel.countdownTimeLength = TimeInterval(viewModel.defaults.float(forKey: "countdownTimeLength"))
+        viewModel.countdownStartTimeExam = viewModel.defaults.value(forKey: "countdownStartTimeExam") as? Date ?? Date()
+        viewModel.countdownStartClassTimeExam = viewModel.defaults.value(forKey: "countdownStartClassTimeExam") as? Date ?? Date()
+        viewModel.countdownTimeLengthExam = TimeInterval(viewModel.defaults.float(forKey: "countdownTimeLengthExam"))
         
         
 
@@ -46,7 +49,15 @@ struct ClassTimerApp: App {
                 let decoder = JSONDecoder()
 
                 // Decode Note
-                let exams = try decoder.decode([Exam].self, from: data)
+                var exams = try decoder.decode([Exam].self, from: data)
+
+                for exam in exams {
+                    if exam.date < Date() {
+                        let ind = exams.firstIndex(of: exam)
+                        exams.remove(at: ind!)
+                    }
+                }
+                viewModel.defaults.set(exams, forKey: "Exams")
                 viewModel.exams = exams
 
             } catch {

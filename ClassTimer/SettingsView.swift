@@ -114,6 +114,7 @@ struct SettingsView: View {
                             }
 
 
+
                             Picker("Second", selection: $secondNotificationTime) {
                                 ForEach(notificationTimes, id: \.self) {
                                     Text($0)
@@ -131,9 +132,13 @@ struct SettingsView: View {
                                 viewModel.defaults.set(stringToTimeInterval[time]!, forKey: "secondNotificationTime")
 
                             }
+                            
 
                     }
+                    .scrollContentBackground(.hidden)
+
                     .frame(maxHeight: 150)
+
 
                 .scrollDisabled(true)
 

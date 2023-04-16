@@ -10,11 +10,17 @@ import UserNotifications
 
 struct TimerView: View {
     @EnvironmentObject var viewModel: AppViewModel
-    @State var progress: Double = 0.15
-
+    @State var progressToClass: Double = 0.15
+    @State var progressToExam: Double = 0.15
+    @State var timeTo = "Class"
+    @State var nextClassName = ""
+    @State var nextExamName = ""
+    @State var nextExamClassName = ""
     @State var timeToNextClass: Double = 100
+    @State var timeToNextExam: Double = 100
 
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let timerClass = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let timerExam = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     func calculateTimeToNextClass() {
 
@@ -64,7 +70,7 @@ struct TimerView: View {
                 nextWeekday = (nextWeekday) % 7 + 1
             }
         }
-
+        nextClassName = nextName
 
 
         
@@ -107,11 +113,42 @@ struct TimerView: View {
         print(((Date() - viewModel.countdownStartTime)/viewModel.countdownTimeLength))
         timeToNextClass = Double(intervalToNextClass)
         if viewModel.countdownTimeLength != 0 {
-            progress += (Date() - viewModel.countdownStartTime) * 0.7/viewModel.countdownTimeLength
+            progressToClass += (Date() - viewModel.countdownStartTime) * 0.7/viewModel.countdownTimeLength
         }
 
     }
-    func intervalToString(intervalToNextClass: Double) -> String {
+    func calculateTimeToNextExam() {
+        if !viewModel.exams.isEmpty{
+            let nextExam = viewModel.exams.sorted(by: {
+                $0.date < $1.date
+            })[0]
+            timeToNextExam = nextExam.date - Date()
+            nextExamName = nextExam.name
+            nextExamClassName = nextExam.cl.name
+
+        } else {
+            timeToNextExam = 0
+        }
+        if viewModel.countdownStartTimeExam == viewModel.countdownStartClassTimeExam || Date() > viewModel.countdownStartClassTimeExam{
+            viewModel.countdownStartTimeExam = Date()
+            viewModel.countdownStartClassTimeExam = Date(timeIntervalSinceNow: TimeInterval(timeToNextExam))
+            viewModel.countdownTimeLengthExam = Double(timeToNextExam)
+            viewModel.defaults.set(viewModel.countdownStartTimeExam, forKey: "countdownStartTimeExam")
+            viewModel.defaults.set(viewModel.countdownTimeLengthExam, forKey: "countdownTimeLengthExam")
+            viewModel.defaults.set(viewModel.countdownStartClassTimeExam, forKey: "countdownStartClassTimeExam")
+            print("bebe")
+
+        } else {
+            viewModel.countdownStartClassTimeExam = Date(timeIntervalSinceNow: TimeInterval(timeToNextExam))
+            viewModel.defaults.set(viewModel.countdownStartClassTimeExam, forKey: "countdownStartClassTimeExam")
+            print(viewModel.countdownStartClassTimeExam)
+        }
+
+        if viewModel.countdownTimeLengthExam != 0 {
+            progressToExam += (Date() - viewModel.countdownStartTimeExam) * 0.7/viewModel.countdownTimeLengthExam
+        }
+    }
+    func intervalToStringClass(intervalToNextClass: Double) -> String {
         if intervalToNextClass == 0{
             return "No classes planned"
         } else {
@@ -141,50 +178,183 @@ struct TimerView: View {
             return timeString
         }
     }
+    func intervalToStringExam(intervalToNextExam: Double) -> String {
+        if intervalToNextExam == 0{
+            return "No exams planned"
+        } else {
+            var roundedInterval = Int(intervalToNextExam)
+            var timeString = ""
+            var dayString = ""
+
+            let days = String((roundedInterval - roundedInterval % 86400)/86400)
+            roundedInterval = roundedInterval % 86400
+            if days == "1"{
+                dayString = "day"
+            } else {
+                dayString = "days"
+            }
+            let hours = String((roundedInterval - roundedInterval % 3600)/3600)
+            roundedInterval = roundedInterval % 3600
+            var minutes = String((roundedInterval - roundedInterval % 60)/60)
+            if Int(minutes)! < 10 {
+                minutes = "0" + minutes
+            }
+            var seconds = String(roundedInterval % 60)
+            if Int(seconds)! < 10{
+                seconds = "0" + seconds
+            }
+            timeString = "\(days) \(dayString) \(hours):\(minutes):\(seconds)"
+
+            return timeString
+        }
+    }
     
 
     var body: some View {
         VStack {
-            ZStack {
-                Circle()
-                    .trim(from: 0.15, to: 0.85)
-                    .stroke(
-                        viewModel.pickedColor.opacity(0.5),
-                        style: StrokeStyle(
-                            lineWidth: 30,
-                            lineCap: .round
-                        )
-                    )
-                    .rotationEffect(.degrees(90))
-                    .padding(32)
-                Circle()
-                    .trim(from: 0.15, to: progress)
-                    .stroke(
-                        viewModel.pickedColor,
-                        // 1
-                        style: StrokeStyle(
-                            lineWidth: 30,
-                            lineCap: .round
-                        )
-                    )
-                    .rotationEffect(.degrees(90))
-                    .animation(.easeOut, value: progress)
+            Picker("", selection: $timeTo) {
+                Text("Class")
+                    .tag("Class")
+                Text("Exam")
+                    .tag("Exam")
 
-                    .padding(32)
-                VStack{
-                    Text("Time until next class:")
-                        .font(.system(size: 24))
-                        .bold()
-                        .fontDesign(.rounded)
-                    Text(intervalToString(intervalToNextClass: timeToNextClass))
+            }
+            .pickerStyle(.segmented)
+            .frame(alignment: .top)
+            .padding()
+
+            if timeTo == "Exam" && timeToNextExam != 0{
+
+
+
+                    Text("Exam for \(nextExamClassName)")
                         .font(.system(size: 24))
                         .bold()
                         .fontDesign(.rounded)
                         .padding(4)
 
+
+
+            }
+            ZStack {
+                if timeTo == "Class"{
+                    ZStack{
+                        Circle()
+                            .trim(from: 0.15, to: 0.85)
+                            .stroke(
+                                viewModel.pickedColor.opacity(0.5),
+                                style: StrokeStyle(
+                                    lineWidth: 30,
+                                    lineCap: .round
+                                )
+                            )
+                            .rotationEffect(.degrees(90))
+                            .padding(32)
+                        Circle()
+                            .trim(from: 0.15, to: progressToClass)
+                            .stroke(
+                                viewModel.pickedColor,
+                                
+                                style: StrokeStyle(
+                                    lineWidth: 30,
+                                    lineCap: .round
+                                )
+                            )
+                            .rotationEffect(.degrees(90))
+                            .animation(.easeOut, value: progressToClass)
+
+                            .padding(32)
+
+
+                        VStack{
+                            if timeToNextClass != 0{
+                                Text(nextClassName)
+                                    .font(.system(size: 24))
+                                    .bold()
+                                    .fontDesign(.rounded)
+                                    .padding(4)
+                                Text("in")
+                                    .font(.system(size: 18))
+                                    .bold()
+                                    .fontDesign(.rounded)
+                                    .padding(4)
+                            }
+                            Text(intervalToStringClass(intervalToNextClass: timeToNextClass))
+                                .font(.system(size: 24))
+                                .bold()
+                                .fontDesign(.rounded)
+                                .padding(4)
+                        }
+
+
+                    }
+                    .onAppear{
+                        progressToClass = 0
+                        calculateTimeToNextClass()
+
+
+                    }
+                }
+                if timeTo == "Exam"{
+                    ZStack{
+                        Circle()
+                            .trim(from: 0.15, to: 0.85)
+                            .stroke(
+                                viewModel.pickedColor.opacity(0.5),
+                                style: StrokeStyle(
+                                    lineWidth: 30,
+                                    lineCap: .round
+                                )
+                            )
+                            .rotationEffect(.degrees(90))
+                            .padding(32)
+                        Circle()
+                            .trim(from: 0.15, to: progressToExam)
+                            .stroke(
+                                viewModel.pickedColor,
+                                // 1
+                                style: StrokeStyle(
+                                    lineWidth: 30,
+                                    lineCap: .round
+                                )
+                            )
+                            .rotationEffect(.degrees(90))
+                            .animation(.easeOut, value: progressToExam)
+
+                            .padding(32)
+                        VStack{
+                            if timeToNextExam != 0{
+                            Text(nextExamName)
+                                .font(.system(size: 24))
+                                .bold()
+                                .fontDesign(.rounded)
+                                .padding(4)
+
+                                Text("in")
+                                    .font(.system(size: 18))
+                                    .bold()
+                                    .fontDesign(.rounded)
+                                    .padding(4)
+                            }
+                            Text(intervalToStringExam(intervalToNextExam: timeToNextExam))
+                                .font(.system(size: 24))
+                                .bold()
+                                .fontDesign(.rounded)
+                                .padding(4)
+                        }
+
+                    }
+                    .onAppear{
+                        progressToExam = 0
+                        calculateTimeToNextExam()
+
+
+                    }
+
                 }
 
             }
+
             Button(action: {
 
                 UserDefaults.standard.removeObject(forKey: "Classes")
@@ -207,17 +377,20 @@ struct TimerView: View {
                 Text("go")
             }
         }
-        .onAppear{
-            calculateTimeToNextClass()
+        .frame(maxHeight: .infinity, alignment: .top)
 
-
-        }
         .navigationTitle("Timer")
 
-        .onReceive(timer) { time in
-            if progress < 0.85 && timeToNextClass != 0 {
-                progress = progress + 0.7/(timeToNextClass)
+        .onReceive(timerClass) { time in
+            if progressToClass < 0.85 && timeToNextClass != 0 {
+                progressToClass = progressToClass + 0.7/(timeToNextClass)
                 timeToNextClass = timeToNextClass - 1
+            }
+        }
+        .onReceive(timerExam) { time in
+            if progressToExam < 0.85 && timeToNextExam != 0 {
+                progressToExam = progressToExam + 0.7/(timeToNextExam)
+                timeToNextExam = timeToNextExam - 1
             }
         }
 
