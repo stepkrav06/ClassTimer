@@ -19,6 +19,8 @@ class AppViewModel: ObservableObject {
     @Published var countdownStartTimeExam = Date()
     @Published var countdownStartClassTimeExam = Date()
     @Published var countdownTimeLengthExam: Double = 0
+    @Published var countdownStartedForClass: String = ""
+    @Published var countdownStartedForExam: String = ""
 
 
     @Published var dayPickedForSchedule: String = "Mon"

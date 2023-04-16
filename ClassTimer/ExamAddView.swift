@@ -12,7 +12,7 @@ struct ExamAddView: View {
     @Environment(\.dismiss) var dismiss
     @State var name: String = ""
     @State var pickedDate: Date = Date()
-    @State var chosenClass: Class = Class(name: "", daysTimes: [:], description: "", colorR: 0, colorG: 0, colorB: 0, colorA: 0)
+    @State var chosenClass: Class = Class(name: "", daysTimes: [:], description: "", colorR: 0, colorG: 0, colorB: 0, colorA: 0, location: "")
 
 
 

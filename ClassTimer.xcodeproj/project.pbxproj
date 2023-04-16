@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		272BB19929E9275800B49322 /* ExamAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272BB19829E9275800B49322 /* ExamAddView.swift */; };
 		272BB19B29E9390100B49322 /* ExamEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272BB19A29E9390100B49322 /* ExamEditView.swift */; };
+		272BB19D29EC80A600B49322 /* FullWeekClassListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272BB19C29EC80A600B49322 /* FullWeekClassListView.swift */; };
 		2754936129E3E42F0052F42F /* ClassTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754936029E3E42F0052F42F /* ClassTimerApp.swift */; };
 		2754936529E3E4320052F42F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2754936429E3E4320052F42F /* Assets.xcassets */; };
 		2754936829E3E4320052F42F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2754936729E3E4320052F42F /* Preview Assets.xcassets */; };
@@ -21,7 +22,6 @@
 		2754939129E400360052F42F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939029E400360052F42F /* SettingsView.swift */; };
 		2754939529E42C9B0052F42F /* ClassListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939429E42C9B0052F42F /* ClassListView.swift */; };
 		2754939729E42CF00052F42F /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754939629E42CF00052F42F /* Class.swift */; };
-		276466DC29E73296003E759A /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276466DB29E73296003E759A /* SwiftUIView.swift */; };
 		2783761229E492CA00973219 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761129E492CA00973219 /* DayView.swift */; };
 		2783761629E4AFDB00973219 /* ClassAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783761529E4AFDB00973219 /* ClassAddView.swift */; };
 		27EE8A7129E5E1030072FF31 /* EditClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EE8A7029E5E1030072FF31 /* EditClassView.swift */; };
@@ -47,6 +47,7 @@
 /* Begin PBXFileReference section */
 		272BB19829E9275800B49322 /* ExamAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamAddView.swift; sourceTree = "<group>"; };
 		272BB19A29E9390100B49322 /* ExamEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamEditView.swift; sourceTree = "<group>"; };
+		272BB19C29EC80A600B49322 /* FullWeekClassListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullWeekClassListView.swift; sourceTree = "<group>"; };
 		2754935D29E3E42F0052F42F /* ClassTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2754936029E3E42F0052F42F /* ClassTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTimerApp.swift; sourceTree = "<group>"; };
 		2754936429E3E4320052F42F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -62,7 +63,6 @@
 		2754939029E400360052F42F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2754939429E42C9B0052F42F /* ClassListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassListView.swift; sourceTree = "<group>"; };
 		2754939629E42CF00052F42F /* Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
-		276466DB29E73296003E759A /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		2783761129E492CA00973219 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		2783761529E4AFDB00973219 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
 		27EE8A7029E5E1030072FF31 /* EditClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClassView.swift; sourceTree = "<group>"; };
@@ -98,7 +98,6 @@
 		2754935429E3E42F0052F42F = {
 			isa = PBXGroup;
 			children = (
-				276466DB29E73296003E759A /* SwiftUIView.swift */,
 				2754935F29E3E42F0052F42F /* ClassTimer */,
 				2754937029E3E4320052F42F /* ClassTimerTests */,
 				2754937A29E3E4320052F42F /* ClassTimerUITests */,
@@ -130,6 +129,7 @@
 				2754938A29E3E4460052F42F /* TimerView.swift */,
 				2754938C29E3F8FB0052F42F /* Tab.swift */,
 				2754939429E42C9B0052F42F /* ClassListView.swift */,
+				272BB19C29EC80A600B49322 /* FullWeekClassListView.swift */,
 				2783761529E4AFDB00973219 /* ClassAddView.swift */,
 				272BB19829E9275800B49322 /* ExamAddView.swift */,
 				2754939629E42CF00052F42F /* Class.swift */,
@@ -294,10 +294,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				276466DC29E73296003E759A /* SwiftUIView.swift in Sources */,
 				2754938B29E3E4460052F42F /* TimerView.swift in Sources */,
 				2783761229E492CA00973219 /* DayView.swift in Sources */,
 				2754938F29E3F9E50052F42F /* ContentView.swift in Sources */,
+				272BB19D29EC80A600B49322 /* FullWeekClassListView.swift in Sources */,
 				2754939729E42CF00052F42F /* Class.swift in Sources */,
 				2754939529E42C9B0052F42F /* ClassListView.swift in Sources */,
 				2754939129E400360052F42F /* SettingsView.swift in Sources */,
@@ -393,7 +393,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -447,7 +448,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -471,14 +473,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ClassTimer/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MyTimeHasCome;
+				INFOPLIST_KEY_CFBundleDisplayName = Classy;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -505,14 +507,14 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ClassTimer/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MyTimeHasCome;
+				INFOPLIST_KEY_CFBundleDisplayName = Classy;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

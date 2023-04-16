@@ -18,6 +18,7 @@ struct Class: Identifiable, Equatable, Codable, Hashable {
     var colorG: Double
     var colorB: Double
     var colorA: Double
+    var location: String
     
 
     

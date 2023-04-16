@@ -37,10 +37,9 @@ struct TimerView: View {
         var nextTime = ""
         var nextName = ""
         print(todayWeekday)
-
+        var flag = 0
         while nextTime == ""{
-            print(nextWeekday)
-            print(nextTime)
+            print("classes")
 
             if viewModel.schedule.schedule == [1:[],2:[],3:[],4:[],5:[],6:[],7:[]]{
                 break
@@ -56,7 +55,7 @@ struct TimerView: View {
                 })
                 for lesson in lessons {
                     let time = lesson.timeStart
-                    if time > timeNow || nextWeekday != todayWeekday{
+                    if time > timeNow || nextWeekday != todayWeekday || flag == 7{
                         nextTime = time
                         nextName = lesson.name
                         break
@@ -68,6 +67,7 @@ struct TimerView: View {
             }
             if nextTime == ""{
                 nextWeekday = (nextWeekday) % 7 + 1
+                flag += 1
             }
         }
         nextClassName = nextName
@@ -92,11 +92,16 @@ struct TimerView: View {
                 intervalToNextClass += intr + otherIntr
 
             }
+            if flag == 7{
+                intervalToNextClass += 60 * 60 * 24 * 7
+            }
         }
-        if viewModel.countdownStartTime == viewModel.countdownStartClassTime || Date() > viewModel.countdownStartClassTime{
+        if viewModel.countdownStartTime == viewModel.countdownStartClassTime || Date() > viewModel.countdownStartClassTime || nextName != viewModel.countdownStartedForClass{
             viewModel.countdownStartTime = Date()
             viewModel.countdownStartClassTime = Date(timeIntervalSinceNow: TimeInterval(intervalToNextClass))
             viewModel.countdownTimeLength = Double(intervalToNextClass)
+            viewModel.countdownStartedForClass = nextName
+            viewModel.defaults.set(viewModel.countdownStartedForClass, forKey: "countdownStartedForClass")
             viewModel.defaults.set(viewModel.countdownStartTime, forKey: "countdownStartTime")
             viewModel.defaults.set(viewModel.countdownTimeLength, forKey: "countdownTimeLength")
             viewModel.defaults.set(viewModel.countdownStartClassTime, forKey: "countdownStartClassTime")
@@ -113,40 +118,45 @@ struct TimerView: View {
         print(((Date() - viewModel.countdownStartTime)/viewModel.countdownTimeLength))
         timeToNextClass = Double(intervalToNextClass)
         if viewModel.countdownTimeLength != 0 {
+
             progressToClass += (Date() - viewModel.countdownStartTime) * 0.7/viewModel.countdownTimeLength
         }
 
     }
     func calculateTimeToNextExam() {
         if !viewModel.exams.isEmpty{
+            print("error")
             let nextExam = viewModel.exams.sorted(by: {
                 $0.date < $1.date
             })[0]
             timeToNextExam = nextExam.date - Date()
             nextExamName = nextExam.name
             nextExamClassName = nextExam.cl.name
+            if viewModel.countdownStartTimeExam == viewModel.countdownStartClassTimeExam || Date() > viewModel.countdownStartClassTimeExam || nextExamName != viewModel.countdownStartedForExam{
+                viewModel.countdownStartTimeExam = Date()
+                viewModel.countdownStartClassTimeExam = Date(timeIntervalSinceNow: TimeInterval(timeToNextExam))
+                viewModel.countdownTimeLengthExam = Double(timeToNextExam)
+                viewModel.countdownStartedForExam = nextExamName
+                viewModel.defaults.set(viewModel.countdownStartedForExam, forKey: "countdownStartedForExam")
+                viewModel.defaults.set(viewModel.countdownStartTimeExam, forKey: "countdownStartTimeExam")
+                viewModel.defaults.set(viewModel.countdownTimeLengthExam, forKey: "countdownTimeLengthExam")
+                viewModel.defaults.set(viewModel.countdownStartClassTimeExam, forKey: "countdownStartClassTimeExam")
+                print("bebe")
+
+            } else {
+                viewModel.countdownStartClassTimeExam = Date(timeIntervalSinceNow: TimeInterval(timeToNextExam))
+                viewModel.defaults.set(viewModel.countdownStartClassTimeExam, forKey: "countdownStartClassTimeExam")
+                print(viewModel.countdownStartClassTimeExam)
+            }
+
+            if viewModel.countdownTimeLengthExam != 0 {
+                progressToExam += (Date() - viewModel.countdownStartTimeExam) * 0.7/viewModel.countdownTimeLengthExam
+            }
 
         } else {
             timeToNextExam = 0
         }
-        if viewModel.countdownStartTimeExam == viewModel.countdownStartClassTimeExam || Date() > viewModel.countdownStartClassTimeExam{
-            viewModel.countdownStartTimeExam = Date()
-            viewModel.countdownStartClassTimeExam = Date(timeIntervalSinceNow: TimeInterval(timeToNextExam))
-            viewModel.countdownTimeLengthExam = Double(timeToNextExam)
-            viewModel.defaults.set(viewModel.countdownStartTimeExam, forKey: "countdownStartTimeExam")
-            viewModel.defaults.set(viewModel.countdownTimeLengthExam, forKey: "countdownTimeLengthExam")
-            viewModel.defaults.set(viewModel.countdownStartClassTimeExam, forKey: "countdownStartClassTimeExam")
-            print("bebe")
 
-        } else {
-            viewModel.countdownStartClassTimeExam = Date(timeIntervalSinceNow: TimeInterval(timeToNextExam))
-            viewModel.defaults.set(viewModel.countdownStartClassTimeExam, forKey: "countdownStartClassTimeExam")
-            print(viewModel.countdownStartClassTimeExam)
-        }
-
-        if viewModel.countdownTimeLengthExam != 0 {
-            progressToExam += (Date() - viewModel.countdownStartTimeExam) * 0.7/viewModel.countdownTimeLengthExam
-        }
     }
     func intervalToStringClass(intervalToNextClass: Double) -> String {
         if intervalToNextClass == 0{
@@ -228,9 +238,9 @@ struct TimerView: View {
 
 
                     Text("Exam for \(nextExamClassName)")
-                        .font(.system(size: 24))
+                        .font(.system(size: 24, design: .rounded))
                         .bold()
-                        .fontDesign(.rounded)
+
                         .padding(4)
 
 
@@ -269,27 +279,27 @@ struct TimerView: View {
                         VStack{
                             if timeToNextClass != 0{
                                 Text(nextClassName)
-                                    .font(.system(size: 24))
+                                    .font(.system(size: 24, design: .rounded))
                                     .bold()
-                                    .fontDesign(.rounded)
+
                                     .padding(4)
                                 Text("in")
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 18, design: .rounded))
                                     .bold()
-                                    .fontDesign(.rounded)
+
                                     .padding(4)
                             }
                             Text(intervalToStringClass(intervalToNextClass: timeToNextClass))
-                                .font(.system(size: 24))
+                                .font(.system(size: 24, design: .rounded))
                                 .bold()
-                                .fontDesign(.rounded)
+
                                 .padding(4)
                         }
 
 
                     }
                     .onAppear{
-                        progressToClass = 0
+                        progressToClass = 0.15
                         calculateTimeToNextClass()
 
 
@@ -325,27 +335,27 @@ struct TimerView: View {
                         VStack{
                             if timeToNextExam != 0{
                             Text(nextExamName)
-                                .font(.system(size: 24))
+                                .font(.system(size: 24, design: .rounded))
                                 .bold()
-                                .fontDesign(.rounded)
+
                                 .padding(4)
 
                                 Text("in")
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 18, design: .rounded))
                                     .bold()
-                                    .fontDesign(.rounded)
+
                                     .padding(4)
                             }
                             Text(intervalToStringExam(intervalToNextExam: timeToNextExam))
-                                .font(.system(size: 24))
+                                .font(.system(size: 24, design: .rounded))
                                 .bold()
-                                .fontDesign(.rounded)
+
                                 .padding(4)
                         }
 
                     }
                     .onAppear{
-                        progressToExam = 0
+                        progressToExam = 0.15
                         calculateTimeToNextExam()
 
 
@@ -355,39 +365,21 @@ struct TimerView: View {
 
             }
 
-            Button(action: {
-
-                UserDefaults.standard.removeObject(forKey: "Classes")
-                viewModel.classes = []
-                viewModel.schedule = Schedule(schedule: [1:[],2:[],3:[],4:[],5:[],6:[],7:[]])
-                viewModel.countdownStartTime = Date()
-                viewModel.countdownStartClassTime = Date()
-                viewModel.countdownTimeLength = 0
-                UserDefaults.standard.removeObject(forKey: "Schedule")
-                UserDefaults.standard.removeObject(forKey: "Exams")
-                UserDefaults.standard.removeObject(forKey: "countdownStartTime")
-                UserDefaults.standard.removeObject(forKey: "countdownStartClassTime")
-                UserDefaults.standard.removeObject(forKey: "countdownTimeLength")
-                UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: {requests in
-
-                    print(requests.count)
-                })
-                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-            }){
-                Text("go")
-            }
+            
         }
         .frame(maxHeight: .infinity, alignment: .top)
 
         .navigationTitle("Timer")
 
         .onReceive(timerClass) { time in
+            
             if progressToClass < 0.85 && timeToNextClass != 0 {
                 progressToClass = progressToClass + 0.7/(timeToNextClass)
                 timeToNextClass = timeToNextClass - 1
             }
         }
         .onReceive(timerExam) { time in
+            
             if progressToExam < 0.85 && timeToNextExam != 0 {
                 progressToExam = progressToExam + 0.7/(timeToNextExam)
                 timeToNextExam = timeToNextExam - 1

@@ -13,7 +13,7 @@ struct ClassListView: View {
     @State var selectedIndex: Int = 0
     @State var addingClass = false
     @State var addingExam = false
-    let dayLetters = ["M","Tu","W","Th","F","Sa","Su"]
+    let dayLetters = ["M","Tu","W","Th","F","Sa","Su","W"]
     var formatter1 = DateFormatter()
     @State var editClassSheet = false
     @State var editExamSheet = false
@@ -46,7 +46,7 @@ struct ClassListView: View {
                                     content: { item, isSelected in
                                         Text(item)
                                             .foregroundColor(isSelected ? Color.white : Color.gray )
-                                            .padding(.horizontal, 16)
+                                            .padding(.horizontal, 14)
                                             .padding(.vertical, 8)
                                     },
                                     selection: {
@@ -56,20 +56,28 @@ struct ClassListView: View {
                                     .animation(.easeInOut(duration: 0.3))
                 }
                     VStack(spacing: 5){
-                        Group{
 
-                                Text(days[selectedIndex])
-                                    .fontWeight(.thin)
-                                    .italic()
-                                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                                    .padding(.top)
-                                    .padding(.horizontal)
-                                RoundedRectangle(cornerRadius: 50, style: .continuous)
-                                    .frame(height: 2)
-                                    .padding(.horizontal)
-                                DayView(lessons: (viewModel.schedule.schedule[selectedIndex+1]) ?? [])
+                            if selectedIndex != 7{
+                                Group{
+                                    Text(days[selectedIndex])
+                                        .fontWeight(.thin)
+                                        .italic()
+                                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                                        .padding(.top)
+                                        .padding(.horizontal)
+                                    RoundedRectangle(cornerRadius: 50, style: .continuous)
+                                        .frame(height: 2)
+                                        .padding(.horizontal)
+                                    List{
+                                    DayView(lessons: (viewModel.schedule.schedule[selectedIndex+1]) ?? [])
+                                    }
+                                    .listStyle(.plain)
+                                }
+                            } else {
+                                FullWeekClassListView()
+                            }
 
-                        }
+
 
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
@@ -77,30 +85,32 @@ struct ClassListView: View {
 
             }
             if pick == "Classes"{
-                VStack(spacing: 5){
+                VStack{
                     HStack{
-                        Text("Classes")
-                            .fontWeight(.thin)
-                            .italic()
-                            .frame(maxWidth: .infinity, alignment: .topLeading)
+                        Group{
+                            Text("Classes")
+                                .fontWeight(.thin)
+                                .italic()
+                                .frame(maxWidth: .infinity, alignment: .topLeading)
+                                .padding(.top)
+                                .padding(.horizontal)
+                            Button {
+                                addingClass.toggle()
+
+                            } label: {
+                                ZStack{
+                                    Image(systemName: "plus")
+                                        .foregroundColor(Color.gray)
+                                        .font(.system(size: 20))
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .frame(height: 30)
                             .padding(.top)
                             .padding(.horizontal)
-                        Button {
-                            addingClass.toggle()
-
-                        } label: {
-                            ZStack{
-                                Image(systemName: "plus")
-                                    .foregroundColor(Color.gray)
-                                    .font(.system(size: 20))
+                            .sheet(isPresented: $addingClass){
+                                ClassAddView()
                             }
-                            }
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .frame(height: 30)
-                        .padding(.top)
-                        .padding(.horizontal)
-                        .sheet(isPresented: $addingClass){
-                            ClassAddView()
                         }
                     }
                     RoundedRectangle(cornerRadius: 50, style: .continuous)
@@ -110,10 +120,15 @@ struct ClassListView: View {
                     List{
                         ForEach(viewModel.classes){ cl in
                             HStack{
-                                
-                                Text(cl.name)
-                                    .fontWeight(.medium)
-                                    .frame(alignment: .leading)
+                                VStack{
+                                    Text(cl.name)
+                                        .fontWeight(.medium)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text(cl.location)
+                                        .font(.system(size: 14))
+                                        .fontWeight(.thin)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
 
 
 

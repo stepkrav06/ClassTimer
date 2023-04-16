@@ -27,6 +27,8 @@ struct ClassTimerApp: App {
         viewModel.countdownStartTimeExam = viewModel.defaults.value(forKey: "countdownStartTimeExam") as? Date ?? Date()
         viewModel.countdownStartClassTimeExam = viewModel.defaults.value(forKey: "countdownStartClassTimeExam") as? Date ?? Date()
         viewModel.countdownTimeLengthExam = TimeInterval(viewModel.defaults.float(forKey: "countdownTimeLengthExam"))
+        viewModel.countdownStartedForClass = viewModel.defaults.string(forKey: "countdownStartedForClass") ?? ""
+        viewModel.countdownStartedForExam = viewModel.defaults.string(forKey: "countdownStartedForExam") ?? ""
         
         
 
@@ -57,7 +59,9 @@ struct ClassTimerApp: App {
                         exams.remove(at: ind!)
                     }
                 }
-                viewModel.defaults.set(exams, forKey: "Exams")
+                
+                    viewModel.encodeExams(objects: exams)
+
                 viewModel.exams = exams
 
             } catch {

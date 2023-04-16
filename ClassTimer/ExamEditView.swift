@@ -12,7 +12,7 @@ struct ExamEditView: View {
     @Environment(\.dismiss) var dismiss
     @State var name: String = ""
     @State var pickedDate: Date = Date()
-    @State var chosenClass: Class = Class(name: "", daysTimes: [:], description: "", colorR: 0, colorG: 0, colorB: 0, colorA: 0)
+    @State var chosenClass: Class = Class(name: "", daysTimes: [:], description: "", colorR: 0, colorG: 0, colorB: 0, colorA: 0, location: "")
     var examToEdit: Exam
 
 
@@ -153,6 +153,6 @@ struct ExamEditView: View {
 
 struct ExamEditView_Previews: PreviewProvider {
     static var previews: some View {
-        ExamEditView(examToEdit: Exam(name: "", cl: Class(name: "", daysTimes: [:], description: "", colorR: 0, colorG: 0, colorB: 0, colorA: 0), date: Date(), dateString: ""))
+        ExamEditView(examToEdit: Exam(name: "", cl: Class(name: "", daysTimes: [:], description: "", colorR: 0, colorG: 0, colorB: 0, colorA: 0, location: ""), date: Date(), dateString: ""))
     }
 }

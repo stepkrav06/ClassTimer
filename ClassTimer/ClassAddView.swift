@@ -13,6 +13,7 @@ struct ClassAddView: View {
     @State var name: String = ""
     @State var daysPicked: [String] = []
     @State var pickedDay: String = ""
+    @State var pickedLocation: String = ""
     @State var dateTimes: [String:[String]] = [:]
     @State var chosenStartTime: Date = Date()
     @State var chosenEndTime: Date = Date()
@@ -57,6 +58,20 @@ struct ClassAddView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
+                    Group{
+                        Text("Location")
+                            .fontWeight(.thin)
+                            .italic()
+                            .frame(maxWidth: .infinity, alignment: .topLeading)
+                            .padding(.top)
+                            .padding(.horizontal)
+                        RoundedRectangle(cornerRadius: 50, style: .continuous)
+                            .frame(height: 2)
+                            .padding(.horizontal)
+                        TextField("", text: $pickedLocation)
+                            .textFieldStyle(OvalTextFieldStyle())
+                            .padding()
+                    }
 
                     Text("Days")
                         .fontWeight(.thin)
@@ -173,7 +188,11 @@ struct ClassAddView: View {
                         .padding(.horizontal)
                 }
                 List{
-                    ForEach(daysPicked, id:\.self){ day in
+                    ForEach(daysPicked.sorted(by: {
+                        let d1 = dayToDayNumber[$0]!
+                        let d2 = dayToDayNumber[$1]!
+                        return d1 < d2
+                    }), id:\.self){ day in
                         ForEach(dateTimes[day] ?? [], id:\.self){
                             time in
                             HStack{
@@ -200,7 +219,7 @@ struct ClassAddView: View {
                 .frame(minHeight: 200)
 
                 Button {
-                    guard name != "", dateTimes != [:], chosenColor != Color(.sRGB, red: 0, green: 0, blue: 0) else {
+                    guard name != "", dateTimes != [:], chosenColor != Color(.sRGB, red: 0, green: 0, blue: 0), pickedLocation != "" else {
                         emptyFieldsAlert.toggle()
                         return
                     }
@@ -255,7 +274,7 @@ struct ClassAddView: View {
                   let alpha = uiColor[3]
 
 
-                let class1 = Class(name: name, daysTimes: dateTimes, description: classDescription, colorR: red, colorG: green, colorB: blue, colorA: alpha)
+                let class1 = Class(name: name, daysTimes: dateTimes, description: classDescription, colorR: red, colorG: green, colorB: blue, colorA: alpha, location: pickedLocation)
                 var classes = viewModel.classes
                 classes.append(class1)
                 viewModel.classes = classes

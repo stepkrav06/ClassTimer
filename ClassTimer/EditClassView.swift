@@ -14,6 +14,7 @@ struct EditClassView: View {
     @State var name: String = ""
     @State var daysPicked: [String] = []
     @State var pickedDay: String = ""
+    @State var pickedLocation: String = ""
     @State var dateTimes: [String:[String]] = [:]
     @State var chosenStartTime: Date = Date()
     @State var chosenEndTime: Date = Date()
@@ -58,6 +59,20 @@ struct EditClassView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
+                    Group{
+                        Text("Location")
+                            .fontWeight(.thin)
+                            .italic()
+                            .frame(maxWidth: .infinity, alignment: .topLeading)
+                            .padding(.top)
+                            .padding(.horizontal)
+                        RoundedRectangle(cornerRadius: 50, style: .continuous)
+                            .frame(height: 2)
+                            .padding(.horizontal)
+                        TextField("", text: $pickedLocation)
+                            .textFieldStyle(OvalTextFieldStyle())
+                            .padding()
+                    }
                     
                     Text("Days")
                         .fontWeight(.thin)
@@ -174,7 +189,11 @@ struct EditClassView: View {
                         .padding(.horizontal)
                 }
                 List{
-                    ForEach(daysPicked, id:\.self){ day in
+                    ForEach(daysPicked.sorted(by: {
+                        let d1 = dayToDayNumber[$0]!
+                        let d2 = dayToDayNumber[$1]!
+                        return d1 < d2
+                    }), id:\.self){ day in
                         ForEach(dateTimes[day] ?? [], id:\.self){
                             time in
                             HStack{
@@ -201,7 +220,7 @@ struct EditClassView: View {
                 }
                 .frame(minHeight: 200)
                 Button {
-                    guard name != "", dateTimes != [:], chosenColor != Color(.sRGB, red: 0, green: 0, blue: 0) else {
+                    guard name != "", dateTimes != [:], chosenColor != Color(.sRGB, red: 0, green: 0, blue: 0), pickedLocation != "" else {
                         emptyFieldsAlert.toggle()
                         return
                     }
@@ -223,6 +242,7 @@ struct EditClassView: View {
         .onAppear{
             name = classToEdit.name
             dateTimes = classToEdit.daysTimes
+            pickedLocation = classToEdit.location
             daysPicked = Array(classToEdit.daysTimes.keys) as [String]
             let colorR = classToEdit.colorR
             let colorG = classToEdit.colorG
@@ -246,7 +266,11 @@ struct EditClassView: View {
                 }
                 times = times.unique()
                 for time in times {
-                    for day in dateTimes.keys {
+                    for day in dateTimes.keys.sorted(by: {
+                        let d1 = dayToDayNumber[$0]!
+                        let d2 = dayToDayNumber[$1]!
+                        return d1 < d2
+                    }) {
                         if dateTimes[day]!.contains(time) {
                             classDescription += daysShort[dayToDayNumber[day]!-1]
                         }
@@ -265,7 +289,7 @@ struct EditClassView: View {
                   let alpha = uiColor[3]
 
 
-                let class1 = Class(name: name, daysTimes: dateTimes, description: classDescription, colorR: red, colorG: green, colorB: blue, colorA: alpha)
+                let class1 = Class(name: name, daysTimes: dateTimes, description: classDescription, colorR: red, colorG: green, colorB: blue, colorA: alpha, location: pickedLocation)
                 var classes = viewModel.classes
                 classes.append(class1)
                 viewModel.classes = classes
@@ -297,6 +321,6 @@ struct EditClassView: View {
 
 struct EditClassView_Previews: PreviewProvider {
     static var previews: some View {
-        EditClassView(classToEdit: Class(name: "", daysTimes: [:], description: "", colorR: 0, colorG: 0, colorB: 0, colorA: 0))
+        EditClassView(classToEdit: Class(name: "", daysTimes: [:], description: "", colorR: 0, colorG: 0, colorB: 0, colorA: 0, location: ""))
     }
 }

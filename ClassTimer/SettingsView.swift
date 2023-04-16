@@ -23,6 +23,7 @@ struct SettingsView: View {
 
     
 
+
     var body: some View {
         VStack(spacing: 5){
             Group{
@@ -93,8 +94,8 @@ struct SettingsView: View {
 
                     }
                 }
-            .fontWeight(.medium)
-            .font(.system(size: 20))
+
+                .font(.system(size: 20, weight: .medium))
             .frame(maxWidth: .infinity, alignment: .topLeading)
             .padding(.top)
             .padding(.horizontal)
@@ -135,6 +136,7 @@ struct SettingsView: View {
                             
 
                     }
+                
                     .scrollContentBackground(.hidden)
 
                     .frame(maxHeight: 150)

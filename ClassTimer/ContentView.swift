@@ -12,7 +12,7 @@ struct ContentView: View {
     @State var selectedTab: Tab = .classes
     @State var color: Color = .blue
     var body: some View {
-        NavigationStack {
+        NavigationView {
             GeometryReader { geometry in
                 ZStack(alignment: .bottom){
                     Group{
