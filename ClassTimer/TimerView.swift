@@ -18,6 +18,7 @@ struct TimerView: View {
     @State var nextExamClassName = ""
     @State var timeToNextClass: Double = 100
     @State var timeToNextExam: Double = 100
+    @Namespace var animation
 
     let timerClass = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     let timerExam = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -274,6 +275,7 @@ struct TimerView: View {
                             .animation(.easeOut, value: progressToClass)
 
                             .padding(32)
+                            .matchedGeometryEffect(id: "progress", in: animation)
 
 
                         VStack{
@@ -298,12 +300,7 @@ struct TimerView: View {
 
 
                     }
-                    .onAppear{
-                        progressToClass = 0.15
-                        calculateTimeToNextClass()
 
-
-                    }
                 }
                 if timeTo == "Exam"{
                     ZStack{
@@ -332,6 +329,7 @@ struct TimerView: View {
                             .animation(.easeOut, value: progressToExam)
 
                             .padding(32)
+                            .matchedGeometryEffect(id: "progress", in: animation)
                         VStack{
                             if timeToNextExam != 0{
                             Text(nextExamName)
@@ -354,18 +352,21 @@ struct TimerView: View {
                         }
 
                     }
-                    .onAppear{
-                        progressToExam = 0.15
-                        calculateTimeToNextExam()
 
-
-                    }
 
                 }
 
             }
 
             
+        }
+        .onAppear{
+            progressToClass = 0.15
+            calculateTimeToNextClass()
+            progressToExam = 0.15
+            calculateTimeToNextExam()
+
+
         }
         .frame(maxHeight: .infinity, alignment: .top)
 

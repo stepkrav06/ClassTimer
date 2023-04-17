@@ -119,6 +119,9 @@ struct ClassTimerApp: App {
                         content.title = "\(cl.name) is in \(viewModel.timeIntervalToStringTime(interval: viewModel.firstNotificationTime))"
                         content.subtitle = ""
                         content.sound = UNNotificationSound.default
+                        if #available(iOS 15.0, *) {
+                                content.interruptionLevel = .timeSensitive
+                            }
                         let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: true)
                         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
                         UNUserNotificationCenter.current().add(request)
@@ -142,6 +145,9 @@ struct ClassTimerApp: App {
                         content.title = "\(cl.name) is in \(viewModel.timeIntervalToStringTime(interval: viewModel.secondNotificationTime))"
                         content.subtitle = ""
                         content.sound = UNNotificationSound.default
+                        if #available(iOS 15.0, *) {
+                                content.interruptionLevel = .timeSensitive
+                            }
                         let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: true)
                         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
                         UNUserNotificationCenter.current().add(request)
