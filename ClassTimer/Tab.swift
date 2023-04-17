@@ -25,7 +25,7 @@ class AppViewModel: ObservableObject {
 
     @Published var dayPickedForSchedule: String = "Mon"
 
-    let defaults = UserDefaults.standard
+    let defaults = UserDefaults(suiteName: "group.somePIE.ClassTimer")!
 
     func timeIntervalToStringTime(interval: TimeInterval) -> String {
         var intervalString = ""
@@ -54,7 +54,7 @@ class AppViewModel: ObservableObject {
 
             // Encode Note
             let data = try encoder.encode(objects)
-            UserDefaults.standard.set(data, forKey: "Classes")
+            defaults.set(data, forKey: "Classes")
 
         } catch {
             print("Unable to Encode Classes (\(error))")
@@ -67,7 +67,7 @@ class AppViewModel: ObservableObject {
 
             // Encode Note
             let data = try encoder.encode(objects)
-            UserDefaults.standard.set(data, forKey: "Exams")
+            defaults.set(data, forKey: "Exams")
 
         } catch {
             print("Unable to Encode Exams (\(error))")
@@ -81,7 +81,7 @@ class AppViewModel: ObservableObject {
 
             // Encode Note
             let data = try encoder.encode(object)
-            UserDefaults.standard.set(data, forKey: "Schedule")
+            defaults.set(data, forKey: "Schedule")
 
         } catch {
             print("Unable to Encode Schedule (\(error))")

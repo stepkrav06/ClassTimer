@@ -32,7 +32,7 @@ struct ClassTimerApp: App {
         
         
 
-        if let data = UserDefaults.standard.data(forKey: "Classes") {
+        if let data = viewModel.defaults.data(forKey: "Classes") {
             do {
                 // Create JSON Decoder
                 let decoder = JSONDecoder()
@@ -45,7 +45,7 @@ struct ClassTimerApp: App {
                 print("Unable to Decode classes (\(error))")
             }
         }
-        if let data = UserDefaults.standard.data(forKey: "Exams") {
+        if let data = viewModel.defaults.data(forKey: "Exams") {
             do {
                 // Create JSON Decoder
                 let decoder = JSONDecoder()
@@ -68,7 +68,7 @@ struct ClassTimerApp: App {
                 print("Unable to Decode exams (\(error))")
             }
         }
-        if let data = UserDefaults.standard.data(forKey: "Schedule") {
+        if let data = viewModel.defaults.data(forKey: "Schedule") {
             do {
                 // Create JSON Decoder
                 let decoder = JSONDecoder()

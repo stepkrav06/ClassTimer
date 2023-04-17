@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ClassListView: View {
     @EnvironmentObject var viewModel: AppViewModel
-    @State var pick = "Schedule"
+    @State var pick = "Class"
     @State var selectedIndex: Int = 0
     @State var addingClass = false
     @State var addingExam = false
@@ -290,7 +290,7 @@ struct ClassListView: View {
             let todayDay = formatter.string(from: today)
             selectedIndex = dayToDayNumber[todayDay]!-1
 
-            UserDefaults.standard.removeObject(forKey: "Exam")
+            viewModel.defaults.removeObject(forKey: "Exam")
             for exam in viewModel.exams {
                 print(exam.name)
             }
