@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct ClassListView: View {
     @EnvironmentObject var viewModel: AppViewModel
-    @State var pick = "Class"
+    @State var pick = "Classes"
     @State var selectedIndex: Int = 0
     @State var addingClass = false
     @State var addingExam = false
@@ -299,6 +300,7 @@ struct ClassListView: View {
             Button("Cancel", role: .cancel) { }
             Button("Delete", role: .destructive) {
                 viewModel.removeClass(cl: classToEditOrDelete!)
+                WidgetCenter.shared.reloadAllTimelines()
             }
                 }
         .alert("Are you sure you want to delete this exam?", isPresented: $deleteExamAlert) {

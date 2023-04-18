@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct ClassAddView: View {
     @EnvironmentObject var viewModel: AppViewModel
@@ -295,6 +296,7 @@ struct ClassAddView: View {
 
 
                 }
+                WidgetCenter.shared.reloadAllTimelines()
                 dismiss()
             }
             Button("Cancel") {}
